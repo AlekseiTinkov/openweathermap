@@ -8,22 +8,45 @@
 
 /* Begin PBXBuildFile section */
 		71B97D8E2AFD714F00D345FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97D8D2AFD714F00D345FE /* AppDelegate.swift */; };
-		71B97D902AFD714F00D345FE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97D8F2AFD714F00D345FE /* SceneDelegate.swift */; };
-		71B97D922AFD714F00D345FE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97D912AFD714F00D345FE /* ViewController.swift */; };
-		71B97D952AFD714F00D345FE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71B97D932AFD714F00D345FE /* Main.storyboard */; };
 		71B97D972AFD715000D345FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71B97D962AFD715000D345FE /* Assets.xcassets */; };
-		71B97D9A2AFD715000D345FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71B97D982AFD715000D345FE /* LaunchScreen.storyboard */; };
+		71B97DA22AFD72DF00D345FE /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97DA12AFD72DF00D345FE /* AddLocationViewController.swift */; };
+		71B97DA82B02BC2300D345FE /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97DA72B02BC2300D345FE /* MainPageViewController.swift */; };
+		71B97DAA2B02BDC500D345FE /* LocationPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97DA92B02BDC500D345FE /* LocationPageViewController.swift */; };
+		71B97DB02B069F3E00D345FE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 71B97DB22B069F3E00D345FE /* Localizable.strings */; };
+		71B97DB42B06A03100D345FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71B97DB52B06A03100D345FE /* LaunchScreen.storyboard */; };
+		71B97DB72B06A2FC00D345FE /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97DB62B06A2FC00D345FE /* String+Extensions.swift */; };
+		71B97DB92B06B25300D345FE /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97DB82B06B25300D345FE /* NetworkClient.swift */; };
+		71B97DBB2B06B27C00D345FE /* NetworkTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97DBA2B06B27C00D345FE /* NetworkTask.swift */; };
+		71B97DC02B06B91600D345FE /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97DBF2B06B91600D345FE /* Requests.swift */; };
+		71B97DC22B06BC8600D345FE /* GeoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97DC12B06BC8600D345FE /* GeoModel.swift */; };
+		71B97DC42B0A210B00D345FE /* AddLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97DC32B0A210B00D345FE /* AddLocationViewModel.swift */; };
+		71B97DC62B0A21D600D345FE /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97DC52B0A21D600D345FE /* Observable.swift */; };
+		71B97DCA2B0A28ED00D345FE /* AddLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97DC92B0A28ED00D345FE /* AddLocationCell.swift */; };
+		71B97DCC2B0A605F00D345FE /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97DCB2B0A605F00D345FE /* UIViewController+Extensions.swift */; };
+		71B97DCE2B0AA51800D345FE /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97DCD2B0AA51800D345FE /* LocationModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		71B97D8A2AFD714F00D345FE /* openweathermap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openweathermap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71B97D8D2AFD714F00D345FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		71B97D8F2AFD714F00D345FE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		71B97D912AFD714F00D345FE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		71B97D942AFD714F00D345FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		71B97D962AFD715000D345FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		71B97D992AFD715000D345FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		71B97D9B2AFD715000D345FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		71B97DA12AFD72DF00D345FE /* AddLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
+		71B97DA72B02BC2300D345FE /* MainPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
+		71B97DA92B02BDC500D345FE /* LocationPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPageViewController.swift; sourceTree = "<group>"; };
+		71B97DB12B069F3E00D345FE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		71B97DB32B069F4000D345FE /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		71B97DB52B06A03100D345FE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		71B97DB62B06A2FC00D345FE /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		71B97DB82B06B25300D345FE /* NetworkClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		71B97DBA2B06B27C00D345FE /* NetworkTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTask.swift; sourceTree = "<group>"; };
+		71B97DBF2B06B91600D345FE /* Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
+		71B97DC12B06BC8600D345FE /* GeoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoModel.swift; sourceTree = "<group>"; };
+		71B97DC32B0A210B00D345FE /* AddLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationViewModel.swift; sourceTree = "<group>"; };
+		71B97DC52B0A21D600D345FE /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		71B97DC92B0A28ED00D345FE /* AddLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationCell.swift; sourceTree = "<group>"; };
+		71B97DCB2B0A605F00D345FE /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		71B97DCD2B0AA51800D345FE /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,14 +80,57 @@
 			isa = PBXGroup;
 			children = (
 				71B97D8D2AFD714F00D345FE /* AppDelegate.swift */,
-				71B97D8F2AFD714F00D345FE /* SceneDelegate.swift */,
-				71B97D912AFD714F00D345FE /* ViewController.swift */,
-				71B97D932AFD714F00D345FE /* Main.storyboard */,
+				71B97DA72B02BC2300D345FE /* MainPageViewController.swift */,
+				71B97DA92B02BDC500D345FE /* LocationPageViewController.swift */,
+				71B97DCF2B0AA54600D345FE /* Models */,
+				71B97DC82B0A220000D345FE /* AddLocation */,
+				71B97DC72B0A21E400D345FE /* Helpers */,
+				71B97DBE2B06B2F900D345FE /* NetworkClient */,
 				71B97D962AFD715000D345FE /* Assets.xcassets */,
-				71B97D982AFD715000D345FE /* LaunchScreen.storyboard */,
+				71B97DB52B06A03100D345FE /* LaunchScreen.storyboard */,
 				71B97D9B2AFD715000D345FE /* Info.plist */,
+				71B97DB22B069F3E00D345FE /* Localizable.strings */,
 			);
 			path = openweathermap;
+			sourceTree = "<group>";
+		};
+		71B97DBE2B06B2F900D345FE /* NetworkClient */ = {
+			isa = PBXGroup;
+			children = (
+				71B97DBA2B06B27C00D345FE /* NetworkTask.swift */,
+				71B97DB82B06B25300D345FE /* NetworkClient.swift */,
+				71B97DBF2B06B91600D345FE /* Requests.swift */,
+			);
+			path = NetworkClient;
+			sourceTree = "<group>";
+		};
+		71B97DC72B0A21E400D345FE /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				71B97DB62B06A2FC00D345FE /* String+Extensions.swift */,
+				71B97DCB2B0A605F00D345FE /* UIViewController+Extensions.swift */,
+				71B97DC52B0A21D600D345FE /* Observable.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		71B97DC82B0A220000D345FE /* AddLocation */ = {
+			isa = PBXGroup;
+			children = (
+				71B97DA12AFD72DF00D345FE /* AddLocationViewController.swift */,
+				71B97DC32B0A210B00D345FE /* AddLocationViewModel.swift */,
+				71B97DC92B0A28ED00D345FE /* AddLocationCell.swift */,
+			);
+			path = AddLocation;
+			sourceTree = "<group>";
+		};
+		71B97DCF2B0AA54600D345FE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				71B97DC12B06BC8600D345FE /* GeoModel.swift */,
+				71B97DCD2B0AA51800D345FE /* LocationModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -108,7 +174,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
+				ru,
 			);
 			mainGroup = 71B97D812AFD714F00D345FE;
 			productRefGroup = 71B97D8B2AFD714F00D345FE /* Products */;
@@ -125,9 +191,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				71B97D9A2AFD715000D345FE /* LaunchScreen.storyboard in Resources */,
+				71B97DB42B06A03100D345FE /* LaunchScreen.storyboard in Resources */,
+				71B97DB02B069F3E00D345FE /* Localizable.strings in Resources */,
 				71B97D972AFD715000D345FE /* Assets.xcassets in Resources */,
-				71B97D952AFD714F00D345FE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,29 +204,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				71B97D922AFD714F00D345FE /* ViewController.swift in Sources */,
+				71B97DC62B0A21D600D345FE /* Observable.swift in Sources */,
+				71B97DAA2B02BDC500D345FE /* LocationPageViewController.swift in Sources */,
+				71B97DA22AFD72DF00D345FE /* AddLocationViewController.swift in Sources */,
+				71B97DBB2B06B27C00D345FE /* NetworkTask.swift in Sources */,
+				71B97DC42B0A210B00D345FE /* AddLocationViewModel.swift in Sources */,
+				71B97DC22B06BC8600D345FE /* GeoModel.swift in Sources */,
+				71B97DCA2B0A28ED00D345FE /* AddLocationCell.swift in Sources */,
+				71B97DB72B06A2FC00D345FE /* String+Extensions.swift in Sources */,
 				71B97D8E2AFD714F00D345FE /* AppDelegate.swift in Sources */,
-				71B97D902AFD714F00D345FE /* SceneDelegate.swift in Sources */,
+				71B97DA82B02BC2300D345FE /* MainPageViewController.swift in Sources */,
+				71B97DCC2B0A605F00D345FE /* UIViewController+Extensions.swift in Sources */,
+				71B97DC02B06B91600D345FE /* Requests.swift in Sources */,
+				71B97DCE2B0AA51800D345FE /* LocationModel.swift in Sources */,
+				71B97DB92B06B25300D345FE /* NetworkClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		71B97D932AFD714F00D345FE /* Main.storyboard */ = {
+		71B97DB22B069F3E00D345FE /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				71B97D942AFD714F00D345FE /* Base */,
+				71B97DB12B069F3E00D345FE /* en */,
+				71B97DB32B069F4000D345FE /* ru */,
 			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		71B97D982AFD715000D345FE /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				71B97D992AFD715000D345FE /* Base */,
-			);
-			name = LaunchScreen.storyboard;
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -171,6 +241,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -218,7 +289,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -234,6 +305,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -275,7 +347,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -297,9 +369,9 @@
 				INFOPLIST_FILE = openweathermap/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -307,9 +379,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkov.aleksei.openweathermap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -325,9 +400,9 @@
 				INFOPLIST_FILE = openweathermap/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -335,9 +410,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkov.aleksei.openweathermap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
