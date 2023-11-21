@@ -1,6 +1,6 @@
 import Foundation
 
-struct LocationModel: Decodable {
+struct LocationModel: Encodable, Decodable {
     let name: String
     let lat: Double
     let lon: Double

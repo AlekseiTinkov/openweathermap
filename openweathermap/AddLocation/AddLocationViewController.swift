@@ -133,7 +133,7 @@ extension AddLocationViewController: UITableViewDelegate {
             self.mainPageViewController.addLocation(location: location)
             navigationController?.popViewController(animated: true)
         })
-        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .default, handler: nil))
         present(alert, animated: true)
     }
 }

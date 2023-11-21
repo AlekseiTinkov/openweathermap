@@ -1,6 +1,23 @@
 import UIKit
 
-var locations: [LocationModel] = []
+private let userDefaults = UserDefaults.standard
+private let userDefaultsLocationsKey = "locations"
+
+var locations: [LocationModel] = {
+    guard let data = userDefaults.data(forKey: userDefaultsLocationsKey),
+          let locations = try? JSONDecoder().decode([LocationModel].self, from: data) else {
+        return []
+    }
+    return locations
+}() {
+    didSet {
+        guard let data = try? JSONEncoder().encode(locations) else {
+                    assertionFailure("Error save locations")
+                    return
+                }
+        userDefaults.set(data, forKey: userDefaultsLocationsKey)
+    }
+}
 
 protocol MainPageViewControllerProtocol {
     func addLocation(location: LocationModel)
@@ -26,14 +43,6 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         button.tintColor = .colorBlack
         button.setImage(UIImage(named: "menu"), for: .normal)
         button.showsMenuAsPrimaryAction = true
-        button.menu = UIMenu(children: [
-            UIAction(title: "Add location".localized) { [weak self] _ in
-                self?.addLocationTaped()
-            },
-            UIAction(title: "Delete location".localized, attributes: .destructive) { [weak self] _ in
-                self?.deleteLocationTaped()
-            }
-        ])
         return button
     }()
     
@@ -71,8 +80,20 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
     
     private func deleteLocationTaped() {
         if locations.isEmpty { return }
-        locations.remove(at: pageControl.currentPage)
-        updatePageControl()
+        
+        let alert = UIAlertController(
+            title: "",
+            message: "Remove".localized + " " + locations[pageControl.currentPage].name + "?",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "Yes".localized, style: .destructive){ [weak self] _ in
+            guard let self else { return }
+            locations.remove(at: pageControl.currentPage)
+            updatePageControl()
+            updateMenu()
+        })
+        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .default, handler: nil))
+        present(alert, animated: true)
     }
     
     private func setupPageControl() {
@@ -84,17 +105,35 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
-        dataSource = self
         delegate = self
         
         updatePageControl()
     }
     
     private func updatePageControl() {
+        dataSource = nil
+        dataSource = self
         pageControl.numberOfPages = (locations.count == 1) ? 0 : locations.count
         locationPageViewController.pageIndex = pageControl.currentPage
         locationPageViewController.updatePage()
         setViewControllers([locationPageViewController], direction: .forward, animated: true, completion: nil)
+    }
+    
+    private func updateMenu() {
+        var deleteButtonText = "Remove".localized
+        if !locations.isEmpty { deleteButtonText += " " + locations[pageControl.currentPage].name }
+        let deleteButtonAttributes: UIMenuElement.Attributes = locations.isEmpty ? .disabled : .destructive
+        
+        menuButton.menu = UIMenu(children: [
+            UIAction(title: "Add new location".localized) { [weak self] _ in
+                self?.addLocationTaped()
+            },
+            UIAction(title: deleteButtonText,
+                     attributes: deleteButtonAttributes
+                    ) { [weak self] _ in
+                self?.deleteLocationTaped()
+            }
+        ])
     }
     
     private func setupMenuButton() {
@@ -106,13 +145,13 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
             menuButton.widthAnchor.constraint(equalToConstant: 32),
             menuButton.heightAnchor.constraint(equalToConstant: 32)
         ])
+        updateMenu()
     }
     
     func addLocation(location: LocationModel) {
         locations.append(location)
-        dataSource = nil
-        dataSource = self
         updatePageControl()
+        updateMenu()
     }
     
 }
@@ -150,6 +189,7 @@ extension MainPageViewController: UIPageViewControllerDelegate {
         guard let viewController = pageViewController.viewControllers?.first as? LocationPageViewController else { return }
         pageControl.currentPage = viewController.pageIndex
         locationPageViewController = viewController
+        updateMenu()
     }
 }
 
