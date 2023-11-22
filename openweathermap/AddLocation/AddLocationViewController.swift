@@ -2,7 +2,7 @@ import UIKit
 
 final class AddLocationViewController: UIViewController {
     
-    private var addLocationViewModel: AddLocationViewModel
+    private let addLocationViewModel: AddLocationViewModel
     private let mainPageViewController: MainPageViewControllerProtocol
     
     private lazy var searchField: UISearchTextField = {
@@ -98,7 +98,7 @@ extension AddLocationViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AddLocationCell.identifier, for: indexPath) as? AddLocationCell else {
-            assertionFailure("Error get cell")
+            //assertionFailure("Error get cell")
             return .init()
         }
         
@@ -123,6 +123,18 @@ extension AddLocationViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let location = addLocationViewModel.searchResult[indexPath.row]
+        
+        if locations.contains(where: {$0.lat == location.lat && $0.lon == location.lon}) {
+            let alert = UIAlertController(
+                title: "",
+                message: location.name + " " + "already in list".localized,
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "Cancel".localized, style: .default, handler: nil))
+            present(alert, animated: true)
+            return
+        }
+        
         let alert = UIAlertController(
             title: "",
             message: "Add".localized + " " + location.name + "?",

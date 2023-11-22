@@ -12,9 +12,9 @@ var locations: [LocationModel] = {
 }() {
     didSet {
         guard let data = try? JSONEncoder().encode(locations) else {
-                    assertionFailure("Error save locations")
-                    return
-                }
+            assertionFailure("Error save locations")
+            return
+        }
         userDefaults.set(data, forKey: userDefaultsLocationsKey)
     }
 }
@@ -24,7 +24,7 @@ protocol MainPageViewControllerProtocol {
 }
 
 final class MainPageViewController: UIPageViewController, MainPageViewControllerProtocol {
- 
+    
     var locationPageViewController: LocationPageViewController
     
     private lazy var pageControl: UIPageControl = {
@@ -47,7 +47,8 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
     }()
     
     init() {
-        self.locationPageViewController = LocationPageViewController(pageIndex: 0)
+        let locationPageViewModel = LocationPageViewModel()
+        self.locationPageViewController = LocationPageViewController(pageIndex: 0, locationPageViewModel: locationPageViewModel)
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     }
     
@@ -58,15 +59,14 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupPageControl()
-        setupMenuButton()
+        setupViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -96,17 +96,23 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         present(alert, animated: true)
     }
     
-    private func setupPageControl() {
-        pageControl.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(pageControl)
+    private func setupViews() {
+        [pageControl, menuButton].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
         
         NSLayoutConstraint.activate([
             pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            menuButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            menuButton.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 38),
+            menuButton.widthAnchor.constraint(equalToConstant: 32),
+            menuButton.heightAnchor.constraint(equalToConstant: 32)
         ])
         
+        updateMenu()
         delegate = self
-        
         updatePageControl()
     }
     
@@ -131,21 +137,9 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
             UIAction(title: deleteButtonText,
                      attributes: deleteButtonAttributes
                     ) { [weak self] _ in
-                self?.deleteLocationTaped()
-            }
+                        self?.deleteLocationTaped()
+                    }
         ])
-    }
-    
-    private func setupMenuButton() {
-        menuButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(menuButton)
-        NSLayoutConstraint.activate([
-            menuButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            menuButton.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 38),
-            menuButton.widthAnchor.constraint(equalToConstant: 32),
-            menuButton.heightAnchor.constraint(equalToConstant: 32)
-        ])
-        updateMenu()
     }
     
     func addLocation(location: LocationModel) {
@@ -163,7 +157,8 @@ extension MainPageViewController: UIPageViewControllerDataSource {
         var pageIndex = viewController.pageIndex
         pageIndex += locations.count - 1
         pageIndex %= locations.count
-        return LocationPageViewController(pageIndex: pageIndex )
+        let locationPageViewModel = LocationPageViewModel()
+        return LocationPageViewController(pageIndex: pageIndex, locationPageViewModel: locationPageViewModel)
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
@@ -172,7 +167,8 @@ extension MainPageViewController: UIPageViewControllerDataSource {
         var pageIndex = viewController.pageIndex
         pageIndex += 1
         pageIndex %= locations.count
-        return LocationPageViewController(pageIndex: pageIndex )
+        let locationPageViewModel = LocationPageViewModel()
+        return LocationPageViewController(pageIndex: pageIndex, locationPageViewModel: locationPageViewModel)
     }
     
     

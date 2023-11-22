@@ -19,7 +19,12 @@ final class AddLocationViewModel {
     
     func convertGeoToLocation(_ geoModel: GeoModel) -> LocationModel {
         var name = geoModel.name
-        if let localName = geoModel.localNames?.ru { name = localName }
+        if "languageId".localized == "ru" {
+            if let localName = geoModel.localNames?.ru { name = localName }
+        }
+        if "languageId".localized == "en" {
+            if let localName = geoModel.localNames?.en { name = localName }
+        }
         let countryAndState = concatCountryAndState(country: geoModel.country, state: geoModel.state)
         return LocationModel(name: name, lat: geoModel.lat, lon: geoModel.lon, countryAndState: countryAndState)
     }
