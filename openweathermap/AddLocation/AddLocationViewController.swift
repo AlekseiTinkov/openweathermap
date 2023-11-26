@@ -97,8 +97,10 @@ extension AddLocationViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: AddLocationCell.identifier, for: indexPath) as? AddLocationCell else {
-            //assertionFailure("Error get cell")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AddLocationCell.identifier, 
+                                                       for: indexPath) as? AddLocationCell
+        else {
+            assertionFailure("Error get cell")
             return .init()
         }
         

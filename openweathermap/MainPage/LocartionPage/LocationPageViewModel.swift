@@ -7,9 +7,16 @@ final class LocationPageViewModel {
     @Observable
     private(set) var weaterInfo: WeaterInfoModel?
     
+    private func convertTemp(temp: Double) -> String {
+        return "\(round(temp * 10) / 10.0)°"
+    }
+    
     func convertWeatherToInfo(_ weatherModel: WeatherModel) -> WeaterInfoModel {
         return WeaterInfoModel(name: weatherModel.name,
-                               temp: "\(round(weatherModel.main.temp * 10) / 10.0)°"
+                               temp: convertTemp(temp: weatherModel.main.temp),
+                               feelsLike: "feels like".localized + " " + convertTemp(temp: weatherModel.main.feelsLike),
+                               icon: "https://openweathermap.org/img/wn/\(weatherModel.weather[0].icon)@2x.png",
+                               description: weatherModel.weather[0].description
         )
     }
     

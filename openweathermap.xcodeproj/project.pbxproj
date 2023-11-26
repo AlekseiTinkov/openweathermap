@@ -10,6 +10,7 @@
 		714466D72B0D52FF004DFB35 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714466D62B0D52FF004DFB35 /* WeatherModel.swift */; };
 		714466DA2B0E861B004DFB35 /* LocationPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714466D92B0E861B004DFB35 /* LocationPageViewModel.swift */; };
 		714466DC2B0E8AF7004DFB35 /* WeaterInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714466DB2B0E8AF7004DFB35 /* WeaterInfoModel.swift */; };
+		714466DF2B0EA274004DFB35 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 714466DE2B0EA274004DFB35 /* Kingfisher */; };
 		71B97D8E2AFD714F00D345FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97D8D2AFD714F00D345FE /* AppDelegate.swift */; };
 		71B97D972AFD715000D345FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71B97D962AFD715000D345FE /* Assets.xcassets */; };
 		71B97DA22AFD72DF00D345FE /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97DA12AFD72DF00D345FE /* AddLocationViewController.swift */; };
@@ -60,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				714466DF2B0EA274004DFB35 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +75,15 @@
 				714466D92B0E861B004DFB35 /* LocationPageViewModel.swift */,
 			);
 			path = LocartionPage;
+			sourceTree = "<group>";
+		};
+		714466E02B0FD075004DFB35 /* MainPage */ = {
+			isa = PBXGroup;
+			children = (
+				71B97DA72B02BC2300D345FE /* MainPageViewController.swift */,
+				714466D82B0E85E5004DFB35 /* LocartionPage */,
+			);
+			path = MainPage;
 			sourceTree = "<group>";
 		};
 		71B97D812AFD714F00D345FE = {
@@ -96,8 +107,7 @@
 			children = (
 				71B97D8D2AFD714F00D345FE /* AppDelegate.swift */,
 				71B97DCF2B0AA54600D345FE /* Models */,
-				71B97DA72B02BC2300D345FE /* MainPageViewController.swift */,
-				714466D82B0E85E5004DFB35 /* LocartionPage */,
+				714466E02B0FD075004DFB35 /* MainPage */,
 				71B97DC82B0A220000D345FE /* AddLocation */,
 				71B97DC72B0A21E400D345FE /* Helpers */,
 				71B97DBE2B06B2F900D345FE /* NetworkClient */,
@@ -166,6 +176,9 @@
 			dependencies = (
 			);
 			name = openweathermap;
+			packageProductDependencies = (
+				714466DE2B0EA274004DFB35 /* Kingfisher */,
+			);
 			productName = openweathermap;
 			productReference = 71B97D8A2AFD714F00D345FE /* openweathermap.app */;
 			productType = "com.apple.product-type.application";
@@ -194,6 +207,9 @@
 				ru,
 			);
 			mainGroup = 71B97D812AFD714F00D345FE;
+			packageReferences = (
+				714466DD2B0EA274004DFB35 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = 71B97D8B2AFD714F00D345FE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -461,6 +477,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		714466DD2B0EA274004DFB35 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		714466DE2B0EA274004DFB35 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 714466DD2B0EA274004DFB35 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 71B97D822AFD714F00D345FE /* Project object */;
 }

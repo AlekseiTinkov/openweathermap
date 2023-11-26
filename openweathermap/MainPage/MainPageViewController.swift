@@ -19,13 +19,18 @@ var locations: [LocationModel] = {
     }
 }
 
+struct LocationPageView {
+    let model: LocationPageViewModel
+    let controller: LocationPageViewController
+}
+
 protocol MainPageViewControllerProtocol {
     func addLocation(location: LocationModel)
 }
 
 final class MainPageViewController: UIPageViewController, MainPageViewControllerProtocol {
     
-    var locationPageViewController: LocationPageViewController
+    var locationPageViews: [LocationPageView] = []
     
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
@@ -47,8 +52,6 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
     }()
     
     init() {
-        let locationPageViewModel = LocationPageViewModel()
-        self.locationPageViewController = LocationPageViewController(pageIndex: 0, locationPageViewModel: locationPageViewModel)
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     }
     
@@ -59,6 +62,10 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        delegate = self
+        dataSource = self
+        
+        updatePageControl(pageInc: 0)
         setupViews()
     }
     
@@ -78,6 +85,12 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         navigationController?.pushViewController(addLocationViewController, animated: true)
     }
     
+    func addLocation(location: LocationModel) {
+        locations.append(location)
+        updatePageControl(pageInc: 1)
+        updateMenu()
+    }
+    
     private func deleteLocationTaped() {
         if locations.isEmpty { return }
         
@@ -89,7 +102,8 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         alert.addAction(UIAlertAction(title: "Yes".localized, style: .destructive){ [weak self] _ in
             guard let self else { return }
             locations.remove(at: pageControl.currentPage)
-            updatePageControl()
+            locationPageViews.remove(at: pageControl.currentPage)
+            updatePageControl(pageInc: -1)
             updateMenu()
         })
         alert.addAction(UIAlertAction(title: "Cancel".localized, style: .default, handler: nil))
@@ -112,17 +126,27 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         ])
         
         updateMenu()
-        delegate = self
-        updatePageControl()
     }
     
-    private func updatePageControl() {
-        dataSource = nil
-        dataSource = self
+    private func updatePageControl(pageInc: Int) {
+        while locationPageViews.count < locations.count + 1 {
+            let locationPageViewModel = LocationPageViewModel()
+            let locationPageViewController = LocationPageViewController(locationId: nil, locationPageViewModel: locationPageViewModel)
+            locationPageViews.append(LocationPageView(model: locationPageViewModel, controller: locationPageViewController))
+        }
+        for locationsIndex in 0..<locations.count {
+            locationPageViews[locationsIndex].controller.locationId = locations[locationsIndex].id
+        }
+        
         pageControl.numberOfPages = (locations.count == 1) ? 0 : locations.count
-        locationPageViewController.pageIndex = pageControl.currentPage
-        locationPageViewController.updatePage()
-        setViewControllers([locationPageViewController], direction: .forward, animated: true, completion: nil)
+        if pageControl.currentPage + pageInc >= 0 { pageControl.currentPage += pageInc }
+        
+        setViewControllers([locationPageViews[pageControl.currentPage].controller],
+                           direction: .forward,
+                           animated: true,
+                           completion: nil
+        )
+        locationPageViews[pageControl.currentPage].controller.updatePage()
     }
     
     private func updateMenu() {
@@ -142,33 +166,25 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         ])
     }
     
-    func addLocation(location: LocationModel) {
-        locations.append(location)
-        updatePageControl()
-        updateMenu()
-    }
-    
 }
 
 extension MainPageViewController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let viewController = viewController as? LocationPageViewControllerProtocol else { return nil }
         if locations.count < 2 { return nil }
-        var pageIndex = viewController.pageIndex
+        guard var pageIndex = locations.firstIndex(where: {$0.id == viewController.locationId}) else { return nil }
         pageIndex += locations.count - 1
         pageIndex %= locations.count
-        let locationPageViewModel = LocationPageViewModel()
-        return LocationPageViewController(pageIndex: pageIndex, locationPageViewModel: locationPageViewModel)
+        return locationPageViews[pageIndex].controller
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let viewController = viewController as? LocationPageViewControllerProtocol else { return nil }
         if locations.count < 2 { return nil }
-        var pageIndex = viewController.pageIndex
+        guard var pageIndex = locations.firstIndex(where: {$0.id == viewController.locationId}) else { return nil }
         pageIndex += 1
         pageIndex %= locations.count
-        let locationPageViewModel = LocationPageViewModel()
-        return LocationPageViewController(pageIndex: pageIndex, locationPageViewModel: locationPageViewModel)
+        return locationPageViews[pageIndex].controller
     }
     
     
@@ -176,15 +192,17 @@ extension MainPageViewController: UIPageViewControllerDataSource {
 
 extension MainPageViewController: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-        guard var viewController = pendingViewControllers.first as? LocationPageViewControllerProtocol else { return }
-        if viewController.pageIndex >= locations.count { viewController.pageIndex = 0 }
+        guard let viewController = pendingViewControllers.first as? LocationPageViewControllerProtocol else { return }
         viewController.updatePage()
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        guard let viewController = pageViewController.viewControllers?.first as? LocationPageViewController else { return }
-        pageControl.currentPage = viewController.pageIndex
-        locationPageViewController = viewController
+        guard let viewController = pageViewController.viewControllers?.first as? LocationPageViewController,
+              var pageIndex = locations.firstIndex(where: {$0.id == viewController.locationId})
+        else {
+            return
+        }
+        pageControl.currentPage = pageIndex
         updateMenu()
     }
 }
