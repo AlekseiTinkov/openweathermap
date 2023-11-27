@@ -198,7 +198,7 @@ extension MainPageViewController: UIPageViewControllerDelegate {
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         guard let viewController = pageViewController.viewControllers?.first as? LocationPageViewController,
-              var pageIndex = locations.firstIndex(where: {$0.id == viewController.locationId})
+              let pageIndex = locations.firstIndex(where: {$0.id == viewController.locationId})
         else {
             return
         }

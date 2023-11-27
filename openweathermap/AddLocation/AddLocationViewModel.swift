@@ -34,6 +34,8 @@ final class AddLocationViewModel {
         
         DispatchQueue.global().async {
             self.networkClient.send(urlRequest: urlRequest,
+                                    cacheFileName: nil, 
+                                    cacheTimeOutInterval: nil,
                                     type: [GeoModel].self,
                                     onResponse: {result in
                 DispatchQueue.main.async {
