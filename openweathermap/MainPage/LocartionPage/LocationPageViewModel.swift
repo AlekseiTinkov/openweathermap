@@ -1,10 +1,12 @@
 import Foundation
 
+enum CacheFileSuffix: String {
+    case weather = "WEATHER"
+}
+
 final class LocationPageViewModel {
     
     private let networkClient = DefaultNetworkClient()
-    
-    private let cacheTimeOutInterval = 60 * 30 // 30 minutes
     
     @Observable
     private(set) var weaterInfo: WeaterInfoModel?
@@ -22,18 +24,20 @@ final class LocationPageViewModel {
         )
     }
     
+    func getCacheFileName(lat: Double, lon: Double, suffix: CacheFileSuffix) -> String? {
+        if let uuid = locations.first(where: {$0.lat == lat && $0.lon == lon})?.id.uuidString {
+            return uuid + "-" + suffix.rawValue
+        }
+        return nil
+    }
+    
     func loadWeather(lat: Double, lon: Double) {
         guard let urlRequest = GetWeatherRequest(lat: lat, lon: lon) else { return }
-        var cacheFileName = locations.first(where: {$0.lat == lat && $0.lon == lon})?.id.uuidString
-        if cacheFileName != nil {
-            cacheFileName = (cacheFileName ?? "") + "-WEATHER"
-        }
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!)
+        let cacheFileName = getCacheFileName(lat: lat, lon: lon, suffix: .weather)
         
         DispatchQueue.global().async {
             self.networkClient.send(urlRequest: urlRequest, 
-                                    cacheFileName: cacheFileName, 
-                                    cacheTimeOutInterval: self.cacheTimeOutInterval,
+                                    cacheFileName: cacheFileName,
                                     type: WeatherModel.self,
                                     onResponse: {result in
                 DispatchQueue.main.async {

@@ -65,6 +65,7 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         delegate = self
         dataSource = self
         
+        Cache().initCache(timeout: 30 * 60) // 30 minutes
         updatePageControl(pageInc: 0)
         setupViews()
     }
