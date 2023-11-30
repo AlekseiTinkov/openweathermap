@@ -3,7 +3,7 @@ import Foundation
 final class Cache {
     static let shared = Cache()
 
-    private static var timeout: Int?
+    private var timeout: Int = 0
     
     private let cacheDirectory = "openweathermap.cache"
     private var cachePath: URL
@@ -27,14 +27,14 @@ final class Cache {
         }
     }
     
-    init() {
+    private init() {
         self.cachePath = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first ?? URL(fileURLWithPath: ".")
         self.cachePath.appendPathComponent(cacheDirectory)
         makePath(self.cachePath)
     }
     
     func initCache(timeout: Int) {
-        Cache.timeout = timeout
+        self.timeout = timeout
 
         do {
             let items = try FileManager.default.contentsOfDirectory(atPath: cachePath.path)
@@ -55,11 +55,10 @@ final class Cache {
     }
     
     func isCacheTimeOut(cacheFileName: String) -> Bool {
-        guard let timeout = Cache.timeout else { return true }
         var url = self.cachePath
         url.appendPathComponent(cacheFileName)
         if let cacheDate = fileModificationDate(url: url) {
-            return Int(Date.timeIntervalSinceReferenceDate - cacheDate.timeIntervalSinceReferenceDate) > timeout
+            return Int(Date.timeIntervalSinceReferenceDate - cacheDate.timeIntervalSinceReferenceDate) > self.timeout
         }
         return true
     }

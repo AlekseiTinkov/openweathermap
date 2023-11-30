@@ -72,10 +72,10 @@ struct DefaultNetworkClient: NetworkClient {
     func send<T: Decodable>(urlRequest: URLRequest, cacheFileName: String?, type: T.Type, onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask? {
         
         if let cacheFileName,
-           !Cache().isCacheTimeOut(cacheFileName: cacheFileName) {
+           !Cache.shared.isCacheTimeOut(cacheFileName: cacheFileName) {
             var data = Data()
             do {
-                data = try Cache().readCacheFile(cacheFileName: cacheFileName)
+                data = try Cache.shared.readCacheFile(cacheFileName: cacheFileName)
             } catch {
                 onResponse(.failure(error))
             }
@@ -89,7 +89,7 @@ struct DefaultNetworkClient: NetworkClient {
             switch result {
             case let .success(data):
                 if cacheFileName != nil {
-                    Cache().writeCacheFile(cacheFileName: cacheFileName ?? "", data: data)
+                    Cache.shared.writeCacheFile(cacheFileName: cacheFileName ?? "", data: data)
                 }
                 self.parse(data: data, type: type, onResponse: onResponse)
             case let .failure(error):
