@@ -25,7 +25,7 @@ final class LocationPageViewModel {
     }
     
     func getCacheFileName(lat: Double, lon: Double, suffix: CacheFileSuffix) -> String? {
-        if let uuid = locations.first(where: {$0.lat == lat && $0.lon == lon})?.id.uuidString {
+        if let uuid = locations.first(where: {$0.lat == lat && $0.lon == lon})?.locationId.uuidString {
             return uuid + "-" + suffix.rawValue
         }
         return nil

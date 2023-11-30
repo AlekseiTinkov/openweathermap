@@ -26,7 +26,7 @@ final class AddLocationViewModel {
             if let localName = geoModel.localNames?.en { name = localName }
         }
         let countryAndState = concatCountryAndState(country: geoModel.country, state: geoModel.state)
-        return LocationModel(id: UUID(), name: name, lat: geoModel.lat, lon: geoModel.lon, countryAndState: countryAndState)
+        return LocationModel(locationId: UUID(), name: name, lat: geoModel.lat, lon: geoModel.lon, countryAndState: countryAndState)
     }
     
     func searchLocation(searchString: String) {

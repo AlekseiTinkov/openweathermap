@@ -19,18 +19,13 @@ var locations: [LocationModel] = {
     }
 }
 
-struct LocationPageView {
-    let model: LocationPageViewModel
-    let controller: LocationPageViewController
-}
-
 protocol MainPageViewControllerProtocol {
     func addLocation(location: LocationModel)
 }
 
 final class MainPageViewController: UIPageViewController, MainPageViewControllerProtocol {
     
-    var locationPageViews: [LocationPageView] = []
+    var locationPageViews: [LocationPageViewController] = []
     
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
@@ -133,21 +128,21 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         while locationPageViews.count < locations.count + 1 {
             let locationPageViewModel = LocationPageViewModel()
             let locationPageViewController = LocationPageViewController(locationId: nil, locationPageViewModel: locationPageViewModel)
-            locationPageViews.append(LocationPageView(model: locationPageViewModel, controller: locationPageViewController))
+            locationPageViews.append(locationPageViewController)
         }
         for locationsIndex in 0..<locations.count {
-            locationPageViews[locationsIndex].controller.locationId = locations[locationsIndex].id
+            locationPageViews[locationsIndex].locationId = locations[locationsIndex].locationId
         }
         
         pageControl.numberOfPages = (locations.count == 1) ? 0 : locations.count
         if pageControl.currentPage + pageInc >= 0 { pageControl.currentPage += pageInc }
         
-        setViewControllers([locationPageViews[pageControl.currentPage].controller],
+        setViewControllers([locationPageViews[pageControl.currentPage]],
                            direction: .forward,
                            animated: true,
                            completion: nil
         )
-        locationPageViews[pageControl.currentPage].controller.updatePage()
+        locationPageViews[pageControl.currentPage].updatePage()
     }
     
     private func updateMenu() {
@@ -173,19 +168,19 @@ extension MainPageViewController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let viewController = viewController as? LocationPageViewControllerProtocol else { return nil }
         if locations.count < 2 { return nil }
-        guard var pageIndex = locations.firstIndex(where: {$0.id == viewController.locationId}) else { return nil }
+        guard var pageIndex = locations.firstIndex(where: {$0.locationId == viewController.locationId}) else { return nil }
         pageIndex += locations.count - 1
         pageIndex %= locations.count
-        return locationPageViews[pageIndex].controller
+        return locationPageViews[pageIndex]
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let viewController = viewController as? LocationPageViewControllerProtocol else { return nil }
         if locations.count < 2 { return nil }
-        guard var pageIndex = locations.firstIndex(where: {$0.id == viewController.locationId}) else { return nil }
+        guard var pageIndex = locations.firstIndex(where: {$0.locationId == viewController.locationId}) else { return nil }
         pageIndex += 1
         pageIndex %= locations.count
-        return locationPageViews[pageIndex].controller
+        return locationPageViews[pageIndex]
     }
     
     
@@ -199,7 +194,7 @@ extension MainPageViewController: UIPageViewControllerDelegate {
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         guard let viewController = pageViewController.viewControllers?.first as? LocationPageViewController,
-              let pageIndex = locations.firstIndex(where: {$0.id == viewController.locationId})
+              let pageIndex = locations.firstIndex(where: {$0.locationId == viewController.locationId})
         else {
             return
         }

@@ -109,7 +109,7 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
     }
     
     func updatePage() {
-        guard let location = locations.first(where: {$0.id == locationId}) else {
+        guard let location = locations.first(where: {$0.locationId == locationId}) else {
             self.labelLocationName.text = ""
             self.currentTempLabel.text = ""
             return
