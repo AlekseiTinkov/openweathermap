@@ -151,5 +151,3 @@ extension AddLocationViewController: UITableViewDelegate {
         present(alert, animated: true)
     }
 }
-
-

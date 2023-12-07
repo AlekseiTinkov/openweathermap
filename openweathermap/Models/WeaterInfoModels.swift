@@ -13,3 +13,10 @@ struct HourlyForecastInfoModel {
     let temp: String
     let icon: String
 }
+
+struct DailyForecastInfoModel {
+    let date: String
+    let temp: String
+    let icon: String
+    let description: String
+}

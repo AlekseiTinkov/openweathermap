@@ -73,6 +73,17 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
         return collectionView
     }()
     
+    private lazy var dailyForecastTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = .colorWhite
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        tableView.separatorColor = .colorGray
+        tableView.register(DailyForecastTableViewCell.self, forCellReuseIdentifier: DailyForecastTableViewCell.identifier)
+        return tableView
+    }()
+    
     init(locationId: UUID?, locationPageViewModel: LocationPageViewModel) {
         self.locationId = locationId
         self.locationPageViewModel = locationPageViewModel
@@ -98,16 +109,21 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
             self.feelsLikeLabel.text = currenWeaterInfo.feelsLike
         }
         
-        locationPageViewModel.$forecastInfo.bind { [weak self] _ in
+        locationPageViewModel.$hourlyForecastInfo.bind { [weak self] _ in
             guard let self = self else { return }
-            print(">>> \(locationPageViewModel.forecastInfo)")
             self.hourlyForecastCollectionView.reloadData()
+        }
+        
+        locationPageViewModel.$dailyForecastInfo.bind { [weak self] _ in
+            guard let self = self else { return }
+            print(">>>\(locationPageViewModel.dailyForecastInfo)")
+            self.dailyForecastTableView.reloadData()
         }
     }
     
     private func setupViews() {
         view.backgroundColor = .colorWhite
-        [labelLocationName, currentWeaterStackView, currentWeatherLabel, feelsLikeLabel, hourlyForecastCollectionView].forEach {
+        [labelLocationName, currentWeaterStackView, currentWeatherLabel, feelsLikeLabel, hourlyForecastCollectionView, dailyForecastTableView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -127,7 +143,11 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
             hourlyForecastCollectionView.topAnchor.constraint(equalTo: feelsLikeLabel.bottomAnchor, constant: 10),
             hourlyForecastCollectionView.bottomAnchor.constraint(equalTo: feelsLikeLabel.bottomAnchor, constant: 140),
             hourlyForecastCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            hourlyForecastCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            hourlyForecastCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            dailyForecastTableView.topAnchor.constraint(equalTo: hourlyForecastCollectionView.bottomAnchor, constant: 10),
+            dailyForecastTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            dailyForecastTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            dailyForecastTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
     
@@ -141,14 +161,15 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
         self.labelLocationName.text = location.name
         
         locationPageViewModel.loadCurrentWeather(lat: location.lat, lon: location.lon)
-        locationPageViewModel.loadForecast(lat: location.lat, lon: location.lon)
+        locationPageViewModel.loadHourlyForecast(lat: location.lat, lon: location.lon)
+        locationPageViewModel.loadDailyForecast(lat: location.lat, lon: location.lon)
     }
 }
 
 extension LocationPageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return locationPageViewModel.forecastInfo.count
+        return locationPageViewModel.hourlyForecastInfo.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -160,9 +181,8 @@ extension LocationPageViewController: UICollectionViewDataSource {
             assertionFailure("Error get cell")
             return .init()
         }
-        cell.configure(locationPageViewModel.forecastInfo[indexPath.row])
+        cell.configure(locationPageViewModel.hourlyForecastInfo[indexPath.row])
         return cell
-
     }
 }
 
@@ -186,5 +206,46 @@ extension LocationPageViewController: UICollectionViewDelegateFlowLayout {
 //                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
 //        return 0
 //    }
+}
+
+extension LocationPageViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return locationPageViewModel.dailyForecastInfo.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        50
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: DailyForecastTableViewCell.identifier,
+                                                       for: indexPath) as? DailyForecastTableViewCell
+        else {
+            assertionFailure("Error get cell")
+            return .init()
+        }
+        
+        if indexPath.row == locationPageViewModel.dailyForecastInfo.count - 1 {
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: UIScreen.main.bounds.width)
+        } else {
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        }
+        
+        cell.configure(locationPageViewModel.dailyForecastInfo[indexPath.row])
+        
+        cell.layer.masksToBounds = true
+        cell.layer.cornerRadius = 16
+        cell.layer.maskedCorners = []
+        
+        return cell
+    }
+    
+}
+
+extension LocationPageViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+    }
 }
 

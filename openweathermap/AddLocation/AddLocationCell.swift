@@ -23,14 +23,14 @@ final class AddLocationCell: UITableViewCell {
         
         self.selectionStyle = .none
         
-        setupViews()
+        setupCell()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupViews() {
+    private func setupCell() {
         self.backgroundColor = .colorWhite
         
         [nameLabel, countryAndStateLabel].forEach {

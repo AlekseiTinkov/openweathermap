@@ -2,7 +2,8 @@ import Foundation
 
 enum CacheFileSuffix: String {
     case currentWeather = "CurrentWeather"
-    case forecast = "Forecast"
+    case hourlyForecast = "HourlyForecast"
+    case dailyForecast = "DailyForecast"
 }
 
 final class LocationPageViewModel {
@@ -13,10 +14,14 @@ final class LocationPageViewModel {
     private(set) var currentWeatherInfo: CurrentWeaterInfoModel?
     
     @Observable
-    private(set) var forecastInfo: [HourlyForecastInfoModel] = []
+    private(set) var hourlyForecastInfo: [HourlyForecastInfoModel] = []
 
+    @Observable
+    private(set) var dailyForecastInfo: [DailyForecastInfoModel] = []
+    
     private func convertTemp(temp: Double) -> String {
-        return "\(round(temp * 10) / 10.0)°"
+        let sign = temp > 0 ? "+" : ""
+        return "\(sign)\(round(temp * 10) / 10.0)°"
     }
     
     private func getIconUrl(name: String, size: Int) -> String {
@@ -34,7 +39,7 @@ final class LocationPageViewModel {
         )
     }
     
-    private func convertForecastToInfo(_ forecastModel: HourlyForecastModel) -> [HourlyForecastInfoModel] {
+    private func convertHourlyForecastToInfo(_ forecastModel: HourlyForecastModel) -> [HourlyForecastInfoModel] {
         let timeFormatter = DateFormatter()
         let dateFormatter = DateFormatter()
         timeFormatter.dateFormat = "HH:mm"
@@ -49,6 +54,24 @@ final class LocationPageViewModel {
                     temp: convertTemp(temp: $0.main.temp),
                     icon: getIconUrl(name: $0.weather[0].icon, size: 1)
                 )
+            } else {
+                return nil
+            }
+        })
+    }
+    
+    private func convertDailyForecastToInfo(_ forecastModel: DailyForecastModel) -> [DailyForecastInfoModel] {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E dd.MM.yyyy"
+        
+        return forecastModel.list.compactMap({
+            let dt = Date(timeIntervalSince1970: TimeInterval($0.dt)) - 12 * 60 * 60
+            if dt > Date() {
+                return DailyForecastInfoModel(
+                    date: dateFormatter.string(from: dt),
+                    temp: convertTemp(temp: $0.temp.min) + " ... " + convertTemp(temp: $0.temp.max),
+                    icon: getIconUrl(name: $0.weather[0].icon, size: 1),
+                    description: $0.weather[0].description)
             } else {
                 return nil
             }
@@ -84,9 +107,9 @@ final class LocationPageViewModel {
         }
     }
     
-    func loadForecast(lat: Double, lon: Double) {
-        guard let urlRequest = GetForecastRequest(lat: lat, lon: lon) else { return }
-        let cacheFileName = getCacheFileName(lat: lat, lon: lon, suffix: .forecast)
+    func loadHourlyForecast(lat: Double, lon: Double) {
+        guard let urlRequest = GetHourlyForecastRequest(lat: lat, lon: lon) else { return }
+        let cacheFileName = getCacheFileName(lat: lat, lon: lon, suffix: .hourlyForecast)
         
         DispatchQueue.global().async {
             self.networkClient.send(urlRequest: urlRequest,
@@ -96,7 +119,29 @@ final class LocationPageViewModel {
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let model):
-                        self.forecastInfo = self.convertForecastToInfo(model)
+                        self.hourlyForecastInfo = self.convertHourlyForecastToInfo(model)
+                        //print(">>> \(model)")
+                    case .failure(let error):
+                        print(">>> \(error)")
+                    }
+                }
+            })
+        }
+    }
+    
+    func loadDailyForecast(lat: Double, lon: Double) {
+        guard let urlRequest = GetDailyForecastRequest(lat: lat, lon: lon) else { return }
+        let cacheFileName = getCacheFileName(lat: lat, lon: lon, suffix: .dailyForecast)
+        
+        DispatchQueue.global().async {
+            self.networkClient.send(urlRequest: urlRequest,
+                                    cacheFileName: cacheFileName,
+                                    type: DailyForecastModel.self,
+                                    onResponse: {result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let model):
+                        self.dailyForecastInfo = self.convertDailyForecastToInfo(model)
                         //print(">>> \(model)")
                     case .failure(let error):
                         print(">>> \(error)")

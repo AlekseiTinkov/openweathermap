@@ -1,7 +1,7 @@
 import UIKit
 
-final class DailyForecastCollectionViewCell: UICollectionViewCell {
-    static let identifier = "DailyForecastCollectionCell"
+final class DailyForecastTableViewCell: UITableViewCell {
+    static let identifier = "DailyForecastTableCell"
     
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
@@ -10,9 +10,23 @@ final class DailyForecastCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.backgroundColor = .clear
+    private var weaterImage: UIImageView = {
+        let imageView = UIImageView()
+        return imageView
+    }()
+    
+    private lazy var tempLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .colorBlack
+        return label
+    }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        self.selectionStyle = .none
+        
         setupCell()
     }
     
@@ -20,21 +34,29 @@ final class DailyForecastCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    
     private func setupCell() {
         self.backgroundColor = .clear
-        [dateLabel].forEach {
+        [dateLabel, weaterImage, tempLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
 
         NSLayoutConstraint.activate([
-            dateLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            dateLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+            dateLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            dateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            weaterImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            weaterImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -150),
+            tempLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            tempLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
         ])
     }
     
     func configure(_ info: DailyForecastInfoModel) {
         self.dateLabel.text = info.date
+        self.weaterImage.kf.setImage(with: URL(string: info.icon))
+        self.tempLabel.text = info.temp
     }
     
     
