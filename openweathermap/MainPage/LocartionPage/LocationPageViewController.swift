@@ -60,6 +60,19 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
         return label
     }()
     
+    private lazy var hourlyForecastCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.dataSource = self
+        collectionView.register(HourlyForecastCollectionViewCell.self, forCellWithReuseIdentifier: HourlyForecastCollectionViewCell.identifier)
+        collectionView.delegate = self
+        collectionView.isScrollEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .colorGray
+        return collectionView
+    }()
+    
     init(locationId: UUID?, locationPageViewModel: LocationPageViewModel) {
         self.locationId = locationId
         self.locationPageViewModel = locationPageViewModel
@@ -75,20 +88,26 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
         
         setupViews()
         
-        locationPageViewModel.$weaterInfo.bind { [weak self] _ in
+        locationPageViewModel.$currentWeatherInfo.bind { [weak self] _ in
             guard let self = self,
-                  let weaterInfo = locationPageViewModel.weaterInfo
+                  let currenWeaterInfo = locationPageViewModel.currentWeatherInfo
             else { return }
-            self.currentTempLabel.text = weaterInfo.temp
-            self.currentWeaterImage.kf.setImage(with: URL(string: weaterInfo.icon))
-            self.currentWeatherLabel.text = weaterInfo.description
-            self.feelsLikeLabel.text = weaterInfo.feelsLike
+            self.currentTempLabel.text = currenWeaterInfo.temp
+            self.currentWeaterImage.kf.setImage(with: URL(string: currenWeaterInfo.icon))
+            self.currentWeatherLabel.text = currenWeaterInfo.description
+            self.feelsLikeLabel.text = currenWeaterInfo.feelsLike
+        }
+        
+        locationPageViewModel.$forecastInfo.bind { [weak self] _ in
+            guard let self = self else { return }
+            print(">>> \(locationPageViewModel.forecastInfo)")
+            self.hourlyForecastCollectionView.reloadData()
         }
     }
     
     private func setupViews() {
         view.backgroundColor = .colorWhite
-        [labelLocationName, currentWeaterStackView, currentWeatherLabel, feelsLikeLabel].forEach {
+        [labelLocationName, currentWeaterStackView, currentWeatherLabel, feelsLikeLabel, hourlyForecastCollectionView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -104,7 +123,11 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
             currentWeatherLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             currentWeatherLabel.topAnchor.constraint(equalTo: currentWeaterStackView.bottomAnchor, constant: 3),
             feelsLikeLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            feelsLikeLabel.topAnchor.constraint(equalTo: currentWeatherLabel.bottomAnchor, constant: 3)
+            feelsLikeLabel.topAnchor.constraint(equalTo: currentWeatherLabel.bottomAnchor, constant: 3),
+            hourlyForecastCollectionView.topAnchor.constraint(equalTo: feelsLikeLabel.bottomAnchor, constant: 10),
+            hourlyForecastCollectionView.bottomAnchor.constraint(equalTo: feelsLikeLabel.bottomAnchor, constant: 140),
+            hourlyForecastCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            hourlyForecastCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
     
@@ -117,6 +140,51 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
     
         self.labelLocationName.text = location.name
         
-        locationPageViewModel.loadWeather(lat: location.lat, lon: location.lon)
+        locationPageViewModel.loadCurrentWeather(lat: location.lat, lon: location.lon)
+        locationPageViewModel.loadForecast(lat: location.lat, lon: location.lon)
     }
 }
+
+extension LocationPageViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        return locationPageViewModel.forecastInfo.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: HourlyForecastCollectionViewCell.identifier,
+            for: indexPath
+        ) as? HourlyForecastCollectionViewCell else {
+            assertionFailure("Error get cell")
+            return .init()
+        }
+        cell.configure(locationPageViewModel.forecastInfo[indexPath.row])
+        return cell
+
+    }
+}
+
+extension LocationPageViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath) -> CGSize {
+            return CGSize(width: 100, height: 130)
+        }
+    
+//    func collectionView(
+//        _ collectionView: UICollectionView,
+//        layout collectionViewLayout: UICollectionViewLayout,
+//        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//            return 0
+//        }
+//    
+//    func collectionView(_ collectionView: UICollectionView,
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return 0
+//    }
+}
+
