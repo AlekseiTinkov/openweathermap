@@ -3,6 +3,7 @@ import Foundation
 struct DailyForecastModel: Codable {
     let cod: String
     let list: [DailyListModel]
+    let city: CityModel
 }
 
 struct HourlyForecastModel: Codable {
@@ -34,8 +35,9 @@ struct TempModel: Codable {
 }
 
 struct CityModel: Codable {
-    let sunrise: Int64
-    let sunset: Int64
+    let sunrise: Int64?
+    let sunset: Int64?
+    let timezone: Int
 }
 
 struct WeatherModel: Codable {

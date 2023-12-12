@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		711CA9C82B28E534006BB81E /* EditLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711CA9C72B28E534006BB81E /* EditLocationsViewController.swift */; };
+		711CA9CA2B28E8F9006BB81E /* EditLocationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711CA9C92B28E8F9006BB81E /* EditLocationsCell.swift */; };
 		714466D72B0D52FF004DFB35 /* OpenWeatherMapModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714466D62B0D52FF004DFB35 /* OpenWeatherMapModels.swift */; };
 		714466DA2B0E861B004DFB35 /* LocationPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714466D92B0E861B004DFB35 /* LocationPageViewModel.swift */; };
 		714466DC2B0E8AF7004DFB35 /* WeaterInfoModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714466DB2B0E8AF7004DFB35 /* WeaterInfoModels.swift */; };
@@ -34,6 +36,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		711CA9C72B28E534006BB81E /* EditLocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationsViewController.swift; sourceTree = "<group>"; };
+		711CA9C92B28E8F9006BB81E /* EditLocationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocationsCell.swift; sourceTree = "<group>"; };
 		714466D62B0D52FF004DFB35 /* OpenWeatherMapModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWeatherMapModels.swift; sourceTree = "<group>"; };
 		714466D92B0E861B004DFB35 /* LocationPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPageViewModel.swift; sourceTree = "<group>"; };
 		714466DB2B0E8AF7004DFB35 /* WeaterInfoModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaterInfoModels.swift; sourceTree = "<group>"; };
@@ -74,6 +78,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		711CA9C62B27B3DA006BB81E /* EditLocations */ = {
+			isa = PBXGroup;
+			children = (
+				711CA9C72B28E534006BB81E /* EditLocationsViewController.swift */,
+				711CA9C92B28E8F9006BB81E /* EditLocationsCell.swift */,
+			);
+			path = EditLocations;
+			sourceTree = "<group>";
+		};
 		714466D82B0E85E5004DFB35 /* LocartionPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +138,7 @@
 				71B97DCF2B0AA54600D345FE /* Models */,
 				714466E02B0FD075004DFB35 /* MainPage */,
 				71B97DC82B0A220000D345FE /* AddLocation */,
+				711CA9C62B27B3DA006BB81E /* EditLocations */,
 				71B97DC72B0A21E400D345FE /* Helpers */,
 				714466E12B17C509004DFB35 /* Cache */,
 				71B97DBE2B06B2F900D345FE /* NetworkClient */,
@@ -258,11 +272,13 @@
 				71B97DAA2B02BDC500D345FE /* LocationPageViewController.swift in Sources */,
 				71B97DA22AFD72DF00D345FE /* AddLocationViewController.swift in Sources */,
 				71B97DBB2B06B27C00D345FE /* NetworkTask.swift in Sources */,
+				711CA9C82B28E534006BB81E /* EditLocationsViewController.swift in Sources */,
 				714466D72B0D52FF004DFB35 /* OpenWeatherMapModels.swift in Sources */,
 				71B97DC42B0A210B00D345FE /* AddLocationViewModel.swift in Sources */,
 				71B97DC22B06BC8600D345FE /* GeoModel.swift in Sources */,
 				71B97DCA2B0A28ED00D345FE /* AddLocationCell.swift in Sources */,
 				714466DA2B0E861B004DFB35 /* LocationPageViewModel.swift in Sources */,
+				711CA9CA2B28E8F9006BB81E /* EditLocationsCell.swift in Sources */,
 				71B97DB72B06A2FC00D345FE /* String+Extensions.swift in Sources */,
 				714466E32B17C52A004DFB35 /* Cache.swift in Sources */,
 				714466DC2B0E8AF7004DFB35 /* WeaterInfoModels.swift in Sources */,

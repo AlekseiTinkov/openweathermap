@@ -21,6 +21,7 @@ var locations: [LocationModel] = {
 
 protocol MainPageViewControllerProtocol {
     func addLocation(location: LocationModel)
+    func updatePageControl(pageInc: Int)
 }
 
 final class MainPageViewController: UIPageViewController, MainPageViewControllerProtocol {
@@ -106,6 +107,11 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         present(alert, animated: true)
     }
     
+    private func editLocationsTaped() {
+        let editLocationsViewController = EditLocationsViewController(mainPageViewController: self)
+        navigationController?.pushViewController(editLocationsViewController, animated: true)
+    }
+    
     private func setupViews() {
         [pageControl, menuButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -124,7 +130,7 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         updateMenu()
     }
     
-    private func updatePageControl(pageInc: Int) {
+    func updatePageControl(pageInc: Int) {
         while locationPageViews.count < locations.count + 1 {
             let locationPageViewModel = LocationPageViewModel()
             let locationPageViewController = LocationPageViewController(locationId: nil, locationPageViewModel: locationPageViewModel)
@@ -135,7 +141,11 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         }
         
         pageControl.numberOfPages = (locations.count == 1) ? 0 : locations.count
-        if pageControl.currentPage + pageInc >= 0 { pageControl.currentPage += pageInc }
+        if pageInc == 0 {
+            pageControl.currentPage = 0
+        } else {
+            if pageControl.currentPage + pageInc >= 0 { pageControl.currentPage += pageInc }
+        }
         
         setViewControllers([locationPageViews[pageControl.currentPage]],
                            direction: .forward,
@@ -149,6 +159,7 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         var deleteButtonText = "Remove".localized
         if !locations.isEmpty { deleteButtonText += " " + locations[pageControl.currentPage].name }
         let deleteButtonAttributes: UIMenuElement.Attributes = locations.isEmpty ? .disabled : .destructive
+        let editButtonAttributes: UIMenuElement.Attributes = locations.isEmpty ? .disabled : UIMenuElement.Attributes()
         
         menuButton.menu = UIMenu(children: [
             UIAction(title: "Add new location".localized) { [weak self] _ in
@@ -158,6 +169,11 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
                      attributes: deleteButtonAttributes
                     ) { [weak self] _ in
                         self?.deleteLocationTaped()
+                    },
+            UIAction(title: "Edit list".localized,
+                     attributes: editButtonAttributes
+                    ) { [weak self] _ in
+                        self?.editLocationsTaped()
                     }
         ])
     }

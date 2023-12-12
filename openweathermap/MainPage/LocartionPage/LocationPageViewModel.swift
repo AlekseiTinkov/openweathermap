@@ -21,7 +21,14 @@ final class LocationPageViewModel {
     
     private func convertTemp(temp: Double) -> String {
         let sign = temp > 0 ? "+" : ""
-        return "\(sign)\(round(temp * 10) / 10.0)°"
+        return "\(sign)\(lroundl(temp))°"
+    }
+    
+    private func convertTempInterval(tempMin: Double, tempMax: Double) -> String {
+        let min = convertTemp(temp: tempMin)
+        let max = convertTemp(temp: tempMax)
+        if min == max { return min }
+        return "\(min) ... \(max)"
     }
     
     private func getIconUrl(name: String, size: Int) -> String {
@@ -69,7 +76,7 @@ final class LocationPageViewModel {
             if dt > Date() {
                 return DailyForecastInfoModel(
                     date: dateFormatter.string(from: dt),
-                    temp: convertTemp(temp: $0.temp.min) + " ... " + convertTemp(temp: $0.temp.max),
+                    temp: convertTempInterval(tempMin: $0.temp.min, tempMax: $0.temp.max),
                     icon: getIconUrl(name: $0.weather[0].icon, size: 1),
                     description: $0.weather[0].description)
             } else {

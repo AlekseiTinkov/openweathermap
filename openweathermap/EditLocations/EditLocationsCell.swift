@@ -1,8 +1,8 @@
 import UIKit
 
-final class AddLocationCell: UITableViewCell {
+final class EditLocationsCell: UITableViewCell {
     
-    static let identifier = "AddLocationCell"
+    static let identifier = "EditLocationsCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
@@ -18,3 +18,4 @@ final class AddLocationCell: UITableViewCell {
     }
     
 }
+
