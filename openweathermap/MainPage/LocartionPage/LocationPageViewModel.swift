@@ -72,7 +72,7 @@ final class LocationPageViewModel {
         dateFormatter.dateFormat = "E dd.MM.yyyy"
         
         return forecastModel.list.compactMap({
-            let dt = Date(timeIntervalSince1970: TimeInterval($0.dt)) - 12 * 60 * 60
+            let dt = Date(timeIntervalSince1970: TimeInterval($0.dt))
             if dt > Date() {
                 return DailyForecastInfoModel(
                     date: dateFormatter.string(from: dt),

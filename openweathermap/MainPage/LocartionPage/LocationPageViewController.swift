@@ -9,6 +9,7 @@ protocol LocationPageViewControllerProtocol {
 final class LocationPageViewController: UIViewController, LocationPageViewControllerProtocol {
     
     private var locationPageViewModel: LocationPageViewModel
+    private let mainPageViewController: MainPageViewControllerProtocol
     
     var locationId: UUID?
     
@@ -69,7 +70,7 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
         collectionView.delegate = self
         collectionView.isScrollEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .colorGray
+        collectionView.backgroundColor = .clear
         return collectionView
     }()
     
@@ -84,9 +85,27 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
         return tableView
     }()
     
-    init(locationId: UUID?, locationPageViewModel: LocationPageViewModel) {
+    private lazy var placeholderLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 30)
+        label.textColor = .colorBlack
+        label.backgroundColor = .colorWhite
+        label.text = "Tap to add a new location".localized
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        
+        label.isUserInteractionEnabled = true
+        let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapPlaceholderLabel))
+        label.addGestureRecognizer(guestureRecognizer)
+        
+        label.isHidden = true
+        return label
+    }()
+    
+    init(locationId: UUID?, locationPageViewModel: LocationPageViewModel, mainPageViewController: MainPageViewControllerProtocol) {
         self.locationId = locationId
         self.locationPageViewModel = locationPageViewModel
+        self.mainPageViewController = mainPageViewController
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -111,6 +130,7 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
         
         locationPageViewModel.$hourlyForecastInfo.bind { [weak self] _ in
             guard let self = self else { return }
+            self.hourlyForecastCollectionView.backgroundColor = locationPageViewModel.hourlyForecastInfo.isEmpty ? .clear : .colorGray
             self.hourlyForecastCollectionView.reloadData()
         }
         
@@ -121,9 +141,17 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
         }
     }
     
+    @objc
+    private func didTapPlaceholderLabel() {
+        print(">>>>")
+        let addLocationViewModel = AddLocationViewModel()
+        let addLocationViewController = AddLocationViewController(addLocationViewModel: addLocationViewModel, mainPageViewController: self.mainPageViewController)
+        navigationController?.pushViewController(addLocationViewController, animated: true)
+    }
+    
     private func setupViews() {
         view.backgroundColor = .colorWhite
-        [labelLocationName, currentWeaterStackView, currentWeatherLabel, feelsLikeLabel, hourlyForecastCollectionView, dailyForecastTableView].forEach {
+        [labelLocationName, currentWeaterStackView, currentWeatherLabel, feelsLikeLabel, hourlyForecastCollectionView, dailyForecastTableView, placeholderLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -140,21 +168,25 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
             currentWeatherLabel.topAnchor.constraint(equalTo: currentWeaterStackView.bottomAnchor, constant: 3),
             feelsLikeLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             feelsLikeLabel.topAnchor.constraint(equalTo: currentWeatherLabel.bottomAnchor, constant: 3),
-            hourlyForecastCollectionView.topAnchor.constraint(equalTo: feelsLikeLabel.bottomAnchor, constant: 10),
+            hourlyForecastCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 225),
             hourlyForecastCollectionView.bottomAnchor.constraint(equalTo: feelsLikeLabel.bottomAnchor, constant: 140),
             hourlyForecastCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             hourlyForecastCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             dailyForecastTableView.topAnchor.constraint(equalTo: hourlyForecastCollectionView.bottomAnchor, constant: 10),
             dailyForecastTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             dailyForecastTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            dailyForecastTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            dailyForecastTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            placeholderLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            placeholderLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            placeholderLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            placeholderLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
     
     func updatePage() {
+        placeholderLabel.isHidden = !locations.isEmpty
+        
         guard let location = locations.first(where: {$0.locationId == locationId}) else {
-            self.labelLocationName.text = ""
-            self.currentTempLabel.text = ""
             return
         }
     
@@ -193,19 +225,6 @@ extension LocationPageViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath) -> CGSize {
             return CGSize(width: 100, height: 130)
         }
-    
-//    func collectionView(
-//        _ collectionView: UICollectionView,
-//        layout collectionViewLayout: UICollectionViewLayout,
-//        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//            return 0
-//        }
-//    
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return 0
-//    }
 }
 
 extension LocationPageViewController: UITableViewDataSource {

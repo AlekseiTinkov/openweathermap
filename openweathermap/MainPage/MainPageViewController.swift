@@ -133,7 +133,7 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
     func updatePageControl(pageInc: Int) {
         while locationPageViews.count < locations.count + 1 {
             let locationPageViewModel = LocationPageViewModel()
-            let locationPageViewController = LocationPageViewController(locationId: nil, locationPageViewModel: locationPageViewModel)
+            let locationPageViewController = LocationPageViewController(locationId: nil, locationPageViewModel: locationPageViewModel, mainPageViewController: self)
             locationPageViews.append(locationPageViewController)
         }
         for locationsIndex in 0..<locations.count {

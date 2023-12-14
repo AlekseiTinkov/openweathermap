@@ -1,9 +1,10 @@
-"Add new location" = "Добавить новую локацию";
+"Tap to add a new location" = "Нажмите, чтобы добавить новое местоположение";
+"Add new location" = "Добавить новое местоположение";
 "Remove" = "Удалить";
 "Edit list" = "Редактировать список";
 "List editing" = "Редактирование списка";
-"Adding a location" = "Добавление локации";
-"Enter location name" = "Введите название локации";
+"Adding a location" = "Добавление местоположения";
+"Enter location name" = "Введите название местоположения";
 "Add" = "Добавть";
 "Yes" = "Да";
 "Cancel" = "Отмена";
