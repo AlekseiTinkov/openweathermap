@@ -48,6 +48,8 @@ final class DailyForecastTableViewCell: UITableViewCell {
             dateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             weaterImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             weaterImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -150),
+            weaterImage.widthAnchor.constraint(equalToConstant: 50),
+            weaterImage.widthAnchor.constraint(equalToConstant: 50),
             tempLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             tempLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
         ])
@@ -55,7 +57,7 @@ final class DailyForecastTableViewCell: UITableViewCell {
     
     func configure(_ info: DailyForecastInfoModel) {
         self.dateLabel.text = info.date
-        self.weaterImage.kf.setImage(with: URL(string: info.icon))
+        self.weaterImage.image = UIImage(named: info.icon)//.kf.setImage(with: URL(string: info.icon))
         self.tempLabel.text = info.temp
     }
     

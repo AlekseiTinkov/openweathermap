@@ -6,6 +6,15 @@ enum CacheFileSuffix: String {
     case dailyForecast = "DailyForecast"
 }
 
+let iconsNameReplace: [String : String] = [
+    "03n" : "03d",
+    "04n" : "04d",
+    "09n" : "09d",
+    "11n" : "11d",
+    "13n" : "13d",
+    "50n" : "50d"
+]
+
 final class LocationPageViewModel {
     
     private let networkClient = DefaultNetworkClient()
@@ -31,17 +40,22 @@ final class LocationPageViewModel {
         return "\(min) ... \(max)"
     }
     
-    private func getIconUrl(name: String, size: Int) -> String {
-        var sizeSuffix = ""
-        if size == 2 { sizeSuffix = "@2x" }
-        return "https://openweathermap.org/img/wn/\(name)\(sizeSuffix).png"
+//    private func getIconUrl(name: String, size: Int) -> String {
+//        var sizeSuffix = ""
+//        if size == 2 { sizeSuffix = "@2x" }
+//        return "https://openweathermap.org/img/wn/\(name)\(sizeSuffix).png"
+//    }
+    
+    private func getIconName(_ icon: String) -> String {
+        let name = iconsNameReplace[icon]
+        return name ?? icon
     }
     
     func convertCurrentWeatherToInfo(_ currentWeatherModel: СurrentWeatherModel) -> CurrentWeaterInfoModel {
         return CurrentWeaterInfoModel(
                                temp: convertTemp(temp: currentWeatherModel.main.temp),
                                feelsLike: "feels like".localized + " " + convertTemp(temp: currentWeatherModel.main.feelsLike),
-                               icon: getIconUrl(name: currentWeatherModel.weather[0].icon, size: 2),
+                               icon: getIconName(currentWeatherModel.weather[0].icon), //getIconUrl(name: currentWeatherModel.weather[0].icon, size: 2),
                                description: currentWeatherModel.weather[0].description
         )
     }
@@ -59,7 +73,7 @@ final class LocationPageViewModel {
                     time: timeFormatter.string(from: dt),
                     date: dateFormatter.string(from: dt),
                     temp: convertTemp(temp: $0.main.temp),
-                    icon: getIconUrl(name: $0.weather[0].icon, size: 1)
+                    icon: getIconName($0.weather[0].icon) //getIconUrl(name: $0.weather[0].icon, size: 1)
                 )
             } else {
                 return nil
@@ -77,7 +91,7 @@ final class LocationPageViewModel {
                 return DailyForecastInfoModel(
                     date: dateFormatter.string(from: dt),
                     temp: convertTempInterval(tempMin: $0.temp.min, tempMax: $0.temp.max),
-                    icon: getIconUrl(name: $0.weather[0].icon, size: 1),
+                    icon: getIconName($0.weather[0].icon), //getIconUrl(name: $0.weather[0].icon, size: 1),
                     description: $0.weather[0].description)
             } else {
                 return nil

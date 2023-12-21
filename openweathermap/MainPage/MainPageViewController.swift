@@ -112,6 +112,11 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         navigationController?.pushViewController(editLocationsViewController, animated: true)
     }
     
+    private func iconsCollectionTaped() {
+        let iconsCollectionViewController = IconsCollectionViewController()
+        navigationController?.pushViewController(iconsCollectionViewController, animated: true)
+    }
+    
     private func setupViews() {
         [pageControl, menuButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -174,7 +179,10 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
                      attributes: editButtonAttributes
                     ) { [weak self] _ in
                         self?.editLocationsTaped()
-                    }
+                    },
+            UIAction(title: "Icons collection") { [weak self] _ in
+                self?.iconsCollectionTaped()
+            }
         ])
     }
     

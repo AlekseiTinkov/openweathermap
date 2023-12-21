@@ -47,12 +47,14 @@ final class HourlyForecastCollectionViewCell: UICollectionViewCell {
         }
 
         NSLayoutConstraint.activate([
-            timeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            timeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
             timeLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             dateLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor),
             dateLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             weaterImage.topAnchor.constraint(equalTo: dateLabel.bottomAnchor),
             weaterImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            weaterImage.widthAnchor.constraint(equalToConstant: 35),
+            weaterImage.heightAnchor.constraint(equalToConstant: 35),
             tempLabel.topAnchor.constraint(equalTo: weaterImage.bottomAnchor),
             tempLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         ])
@@ -61,9 +63,8 @@ final class HourlyForecastCollectionViewCell: UICollectionViewCell {
     func configure(_ info: HourlyForecastInfoModel) {
         self.timeLabel.text = info.time
         self.dateLabel.text = info.date
-        self.weaterImage.kf.setImage(with: URL(string: info.icon))
+        self.weaterImage.image = UIImage(named: info.icon) //.kf.setImage(with: URL(string: info.icon))
         self.tempLabel.text = info.temp
     }
-    
     
 }

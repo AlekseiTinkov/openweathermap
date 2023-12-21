@@ -1,5 +1,5 @@
 import UIKit
-import Kingfisher
+//import Kingfisher
 
 protocol LocationPageViewControllerProtocol {
     var locationId: UUID? { get }
@@ -123,7 +123,8 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
                   let currenWeaterInfo = locationPageViewModel.currentWeatherInfo
             else { return }
             self.currentTempLabel.text = currenWeaterInfo.temp
-            self.currentWeaterImage.kf.setImage(with: URL(string: currenWeaterInfo.icon))
+            self.currentWeaterImage.image = UIImage(named: currenWeaterInfo.icon)
+            //self.currentWeaterImage.kf.setImage(with: URL(string: currenWeaterInfo.icon))
             self.currentWeatherLabel.text = currenWeaterInfo.description
             self.feelsLikeLabel.text = currenWeaterInfo.feelsLike
         }
@@ -179,7 +180,9 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
             placeholderLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             placeholderLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             placeholderLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            placeholderLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            placeholderLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            currentWeaterImage.widthAnchor.constraint(equalToConstant: 70),
+            currentWeaterImage.heightAnchor.constraint(equalToConstant: 70)
         ])
     }
     
