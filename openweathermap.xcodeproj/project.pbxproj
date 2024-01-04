@@ -19,6 +19,9 @@
 		71966CC82B322EB4002A93F5 /* IconsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71966CC72B322EB4002A93F5 /* IconsCollectionViewController.swift */; };
 		71966CCA2B323200002A93F5 /* IconsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71966CC92B323200002A93F5 /* IconsCollectionViewCell.swift */; };
 		71966CCC2B3375A2002A93F5 /* IconsCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71966CCB2B3375A2002A93F5 /* IconsCollectionViewHeader.swift */; };
+		71971C652B41553100169176 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71971C642B41553100169176 /* SettingsViewController.swift */; };
+		71971C672B43FE0B00169176 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71971C662B43FE0B00169176 /* Units.swift */; };
+		71971C692B44109C00169176 /* SettingsVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71971C682B44109C00169176 /* SettingsVariable.swift */; };
 		71B97D8E2AFD714F00D345FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97D8D2AFD714F00D345FE /* AppDelegate.swift */; };
 		71B97D972AFD715000D345FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71B97D962AFD715000D345FE /* Assets.xcassets */; };
 		71B97DA22AFD72DF00D345FE /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97DA12AFD72DF00D345FE /* AddLocationViewController.swift */; };
@@ -50,6 +53,9 @@
 		71966CC72B322EB4002A93F5 /* IconsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsCollectionViewController.swift; sourceTree = "<group>"; };
 		71966CC92B323200002A93F5 /* IconsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsCollectionViewCell.swift; sourceTree = "<group>"; };
 		71966CCB2B3375A2002A93F5 /* IconsCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsCollectionViewHeader.swift; sourceTree = "<group>"; };
+		71971C642B41553100169176 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		71971C662B43FE0B00169176 /* Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
+		71971C682B44109C00169176 /* SettingsVariable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVariable.swift; sourceTree = "<group>"; };
 		71B97D8A2AFD714F00D345FE /* openweathermap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openweathermap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71B97D8D2AFD714F00D345FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		71B97D962AFD715000D345FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -93,7 +99,7 @@
 			path = EditLocations;
 			sourceTree = "<group>";
 		};
-		714466D82B0E85E5004DFB35 /* LocartionPage */ = {
+		714466D82B0E85E5004DFB35 /* LocationPage */ = {
 			isa = PBXGroup;
 			children = (
 				71B97DA92B02BDC500D345FE /* LocationPageViewController.swift */,
@@ -101,14 +107,14 @@
 				7192E7B22B1FBE05004FFA6C /* HourlyForecastCollectionViewCell.swift */,
 				7192E7B42B225697004FFA6C /* DailyForecastTableViewCell.swift */,
 			);
-			path = LocartionPage;
+			path = LocationPage;
 			sourceTree = "<group>";
 		};
 		714466E02B0FD075004DFB35 /* MainPage */ = {
 			isa = PBXGroup;
 			children = (
 				71B97DA72B02BC2300D345FE /* MainPageViewController.swift */,
-				714466D82B0E85E5004DFB35 /* LocartionPage */,
+				714466D82B0E85E5004DFB35 /* LocationPage */,
 			);
 			path = MainPage;
 			sourceTree = "<group>";
@@ -129,6 +135,15 @@
 				71966CCB2B3375A2002A93F5 /* IconsCollectionViewHeader.swift */,
 			);
 			path = IconsCollection;
+			sourceTree = "<group>";
+		};
+		71971C632B4154F700169176 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				71971C682B44109C00169176 /* SettingsVariable.swift */,
+				71971C642B41553100169176 /* SettingsViewController.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		71B97D812AFD714F00D345FE = {
@@ -155,6 +170,7 @@
 				714466E02B0FD075004DFB35 /* MainPage */,
 				71B97DC82B0A220000D345FE /* AddLocation */,
 				711CA9C62B27B3DA006BB81E /* EditLocations */,
+				71971C632B4154F700169176 /* Settings */,
 				71966CC62B322E35002A93F5 /* IconsCollection */,
 				71B97DC72B0A21E400D345FE /* Helpers */,
 				714466E12B17C509004DFB35 /* Cache */,
@@ -204,6 +220,7 @@
 				71B97DCD2B0AA51800D345FE /* LocationModel.swift */,
 				714466D62B0D52FF004DFB35 /* OpenWeatherMapModels.swift */,
 				714466DB2B0E8AF7004DFB35 /* WeaterInfoModels.swift */,
+				71971C662B43FE0B00169176 /* Units.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -295,7 +312,9 @@
 				71966CC82B322EB4002A93F5 /* IconsCollectionViewController.swift in Sources */,
 				71B97DC22B06BC8600D345FE /* GeoModel.swift in Sources */,
 				71B97DCA2B0A28ED00D345FE /* AddLocationCell.swift in Sources */,
+				71971C692B44109C00169176 /* SettingsVariable.swift in Sources */,
 				71966CCC2B3375A2002A93F5 /* IconsCollectionViewHeader.swift in Sources */,
+				71971C672B43FE0B00169176 /* Units.swift in Sources */,
 				714466DA2B0E861B004DFB35 /* LocationPageViewModel.swift in Sources */,
 				711CA9CA2B28E8F9006BB81E /* EditLocationsCell.swift in Sources */,
 				71B97DB72B06A2FC00D345FE /* String+Extensions.swift in Sources */,
@@ -308,6 +327,7 @@
 				71966CCA2B323200002A93F5 /* IconsCollectionViewCell.swift in Sources */,
 				71B97DC02B06B91600D345FE /* Requests.swift in Sources */,
 				71B97DCE2B0AA51800D345FE /* LocationModel.swift in Sources */,
+				71971C652B41553100169176 /* SettingsViewController.swift in Sources */,
 				7192E7B32B1FBE05004FFA6C /* HourlyForecastCollectionViewCell.swift in Sources */,
 				71B97DB92B06B25300D345FE /* NetworkClient.swift in Sources */,
 			);

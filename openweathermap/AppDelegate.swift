@@ -9,6 +9,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        Thread.sleep(forTimeInterval: 1.2)
         window = UIWindow()
         window?.rootViewController = UINavigationController(rootViewController: MainPageViewController())
         window?.makeKeyAndVisible()

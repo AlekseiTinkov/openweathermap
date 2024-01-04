@@ -44,9 +44,8 @@ final class IconsCollectionViewCell: UICollectionViewCell {
     func configure(name: String, section: Int) {
         self.backgroundColor = section == 0 ? UIColor.white : UIColor.black
         self.nameLabel.textColor = section == 0 ? UIColor.black : UIColor.white
-        let prefix = section == 0 ? "L" : "D"
                 
-        self.weaterImage.image = UIImage(named: prefix + name)?.withRenderingMode(.alwaysOriginal)
+        self.weaterImage.image = UIImage(named: name)?.withRenderingMode(.alwaysOriginal)
         self.nameLabel.text = name
     }
     

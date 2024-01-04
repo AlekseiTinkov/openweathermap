@@ -47,7 +47,7 @@ final class HourlyForecastCollectionViewCell: UICollectionViewCell {
         }
 
         NSLayoutConstraint.activate([
-            timeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
+            timeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             timeLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             dateLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor),
             dateLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),

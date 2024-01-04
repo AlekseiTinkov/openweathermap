@@ -34,7 +34,6 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         pageControl.currentPage = 0
         pageControl.currentPageIndicatorTintColor = .colorBlack
         pageControl.pageIndicatorTintColor = .colorGray
-        pageControl.tag = 111
         return pageControl
     }()
     
@@ -60,6 +59,9 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         
         delegate = self
         dataSource = self
+        
+        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
+        UINavigationBar.appearance().titleTextAttributes = attributes
         
         Cache.shared.initCache(timeout: 30 * 60) // 30 minutes
         updatePageControl(pageInc: 0)
@@ -112,9 +114,9 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         navigationController?.pushViewController(editLocationsViewController, animated: true)
     }
     
-    private func iconsCollectionTaped() {
-        let iconsCollectionViewController = IconsCollectionViewController()
-        navigationController?.pushViewController(iconsCollectionViewController, animated: true)
+    private func settingsTaped() {
+        let settingsViewController = SettingsViewController()
+        navigationController?.pushViewController(settingsViewController, animated: true)
     }
     
     private func setupViews() {
@@ -180,8 +182,8 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
                     ) { [weak self] _ in
                         self?.editLocationsTaped()
                     },
-            UIAction(title: "Icons collection") { [weak self] _ in
-                self?.iconsCollectionTaped()
+            UIAction(title: "Settings".localized) { [weak self] _ in
+                self?.settingsTaped()
             }
         ])
     }

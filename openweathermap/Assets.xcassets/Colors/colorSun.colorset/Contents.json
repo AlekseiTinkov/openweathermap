@@ -6,8 +6,8 @@
         "components" : {
           "alpha" : "1.000",
           "blue" : "0x68",
-          "green" : "0x4B",
-          "red" : "0x26"
+          "green" : "0xC2",
+          "red" : "0xEA"
         }
       },
       "idiom" : "universal"
@@ -24,8 +24,8 @@
         "components" : {
           "alpha" : "1.000",
           "blue" : "0x68",
-          "green" : "0x4B",
-          "red" : "0x26"
+          "green" : "0xC2",
+          "red" : "0xEA"
         }
       },
       "idiom" : "universal"
@@ -52,8 +52,5 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "localizable" : true
   }
 }

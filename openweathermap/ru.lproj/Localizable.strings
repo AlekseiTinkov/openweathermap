@@ -1,14 +1,28 @@
 "Tap to add a new location" = "Нажмите, чтобы добавить новое местоположение";
+
 "Add new location" = "Добавить новое местоположение";
 "Remove" = "Удалить";
 "Edit list" = "Редактировать список";
+"Settings" = "Настройки";
+
+"Units" = "Единицы измерения";
+"Temperature" = "Температура";
+"Wind speed" = "Скорость ветра";
+"Atmospheric pressure" = "Атмосферное давление";
+"m/s" = "м/с";
+"km/h" = "км/ч";
+"mmHg." = "мм рт.ст.";
+"hPa" = "гПа";
+
 "List editing" = "Редактирование списка";
+
 "Adding a location" = "Добавление местоположения";
 "Enter location name" = "Введите название местоположения";
 "Add" = "Добавть";
 "Yes" = "Да";
 "Cancel" = "Отмена";
 "already in list" = "уже в списке";
+
 "feels like"  = "ощущается как";
 
 "languageId" = "ru";

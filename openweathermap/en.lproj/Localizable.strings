@@ -1,14 +1,28 @@
 "Tap to add a new location" = "Tap to add a new location";
+
 "Add new location" = "Add new location";
 "Remove" = "Remove";
 "Edit list" = "Edit list";
+"Settings" = "Settings";
+
+"Units" = "Units";
+"Temperature" = "Temperature";
+"Wind speed" = "Wind speed";
+"Atmospheric pressure" = "Atmospheric pressure";
+"m/s" = "m/s";
+"km/h" = "km/h";
+"mmHg." = "mmHg.";
+"hPa" = "hPa";
+
 "List editing" = "List editing";
+
 "Adding a location" = "Adding a location";
 "Enter location name" = "Enter location name";
 "Add" = "Add";
 "Yes" = "Yes";
 "Cancel" = "Cancel";
 "already in list" = "already in list";
+
 "feels like"  = "feels like";
 
 "languageId" = "en";

@@ -29,8 +29,17 @@ final class LocationPageViewModel {
     private(set) var dailyForecastInfo: [DailyForecastInfoModel] = []
     
     private func convertTemp(temp: Double) -> String {
-        let sign = temp > 0 ? "+" : ""
-        return "\(sign)\(lroundl(temp))°"
+        var outTemp: Double
+        switch tempUnits {
+        case .fahrenheit:
+            outTemp = temp * 9 / 5 + 32
+        case .kelvin:
+            outTemp = temp + 273.15
+        default:
+            outTemp = temp
+        }
+        let sign = outTemp > 0 ? "+" : ""
+        return "\(sign)\(lroundl(outTemp))°"
     }
     
     private func convertTempInterval(tempMin: Double, tempMax: Double) -> String {
