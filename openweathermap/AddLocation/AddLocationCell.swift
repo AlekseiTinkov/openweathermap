@@ -5,8 +5,10 @@ final class AddLocationCell: UITableViewCell {
     static let identifier = "AddLocationCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-            super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-        }
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        
+        self.backgroundColor = .colorWhite
+    }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

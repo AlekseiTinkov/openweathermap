@@ -63,6 +63,18 @@ final class MainPageViewController: UIPageViewController, MainPageViewController
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
         
+        SettingsVarible.shared.getUnits()
+        SettingsVarible.shared.$units.bind { [weak self] _ in
+            for i in 0..<locations.count {
+                self?.locationPageViews[i].updatePage()
+            }
+        }
+//        locationPageViewModel.$hourlyForecastInfo.bind { [weak self] _ in
+//            guard let self = self else { return }
+//            self.hourlyForecastCollectionView.backgroundColor = locationPageViewModel.hourlyForecastInfo.isEmpty ? .clear : .colorGray
+//            self.hourlyForecastCollectionView.reloadData()
+//        }
+        
         Cache.shared.initCache(timeout: 30 * 60) // 30 minutes
         updatePageControl(pageInc: 0)
         setupViews()

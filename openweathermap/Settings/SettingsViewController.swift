@@ -55,7 +55,7 @@ final class SettingsViewController: UIViewController {
         segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
         
         segmentedControl.addTarget(self, action: #selector(tempSegmentAction(_:)), for: .valueChanged)
-        segmentedControl.selectedSegmentIndex = tempUnits.rawValue
+        segmentedControl.selectedSegmentIndex =  SettingsVarible.shared.units.tempUnits.rawValue
         return segmentedControl
     }()
     
@@ -72,7 +72,7 @@ final class SettingsViewController: UIViewController {
         segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
         
         segmentedControl.addTarget(self, action: #selector(windSegmentAction(_:)), for: .valueChanged)
-        segmentedControl.selectedSegmentIndex = windUnits.rawValue
+        segmentedControl.selectedSegmentIndex = SettingsVarible.shared.units.windUnits.rawValue
         return segmentedControl
     }()
     
@@ -89,26 +89,23 @@ final class SettingsViewController: UIViewController {
         segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
         
         segmentedControl.addTarget(self, action: #selector(pressureSegmentAction(_:)), for: .valueChanged)
-        segmentedControl.selectedSegmentIndex = pressureUnits.rawValue
+        segmentedControl.selectedSegmentIndex = SettingsVarible.shared.units.pressureUnits.rawValue
         return segmentedControl
     }()
     
     @objc
     func tempSegmentAction(_ segmentedControl: UISegmentedControl) {
-        tempUnits = TempUnits(rawValue: segmentedControl.selectedSegmentIndex) ?? .celsius
-        print(tempUnits.name)
+        SettingsVarible.shared.setTempUnits(tempUnits: TempUnits(rawValue: segmentedControl.selectedSegmentIndex) ?? .celsius)
     }
     
     @objc
     func windSegmentAction(_ segmentedControl: UISegmentedControl) {
-        windUnits = WindUnits(rawValue: segmentedControl.selectedSegmentIndex) ?? .metrPerSec
-        print(windUnits.name)
+        SettingsVarible.shared.setWindUnits(windUnits: WindUnits(rawValue: segmentedControl.selectedSegmentIndex) ?? .metrPerSec)
     }
     
     @objc
     func pressureSegmentAction(_ segmentedControl: UISegmentedControl) {
-        pressureUnits = PressureUnits(rawValue: segmentedControl.selectedSegmentIndex) ?? .mmHg
-        print(pressureUnits.name)
+        SettingsVarible.shared.setPressureUnits(pressureUnits: PressureUnits(rawValue: segmentedControl.selectedSegmentIndex) ?? .hPa)
     }
     
     override func viewDidLoad() {

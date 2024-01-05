@@ -30,7 +30,7 @@ final class LocationPageViewModel {
     
     private func convertTemp(temp: Double) -> String {
         var outTemp: Double
-        switch tempUnits {
+        switch SettingsVarible.shared.units.tempUnits {
         case .fahrenheit:
             outTemp = temp * 9 / 5 + 32
         case .kelvin:

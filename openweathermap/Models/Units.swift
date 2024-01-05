@@ -1,5 +1,11 @@
 import Foundation
 
+struct Units {
+    var tempUnits: TempUnits
+    var windUnits: WindUnits
+    var pressureUnits: PressureUnits
+}
+
 enum TempUnits: Int, CaseIterable {
     case celsius, fahrenheit, kelvin
     

@@ -1,34 +1,39 @@
 import Foundation
 
 
-private let userDefaults = UserDefaults.standard
-
-private let userDefaultsTempUnitsKey = "tempUnits"
-private let userDefaultsWindUnitsKey = "windUnits"
-private let userDefaultsPressureUnitsKey = "pressureUnits"
-
-var tempUnits: TempUnits = TempUnits(rawValue: {
-    return userDefaults.integer(forKey: userDefaultsTempUnitsKey)
-}()) ?? TempUnits.celsius {
-    didSet {
+class SettingsVarible {
+    
+    static let shared = SettingsVarible()
+    
+    private let userDefaults = UserDefaults.standard
+    
+    private let userDefaultsTempUnitsKey = "tempUnits"
+    private let userDefaultsWindUnitsKey = "windUnits"
+    private let userDefaultsPressureUnitsKey = "pressureUnits"
+    
+    @Observable
+    private(set) var units: Units = Units(tempUnits: .celsius, windUnits: .metrPerSec, pressureUnits: .hPa)
+    
+    func getUnits() {
+        let tempUnits = TempUnits(rawValue: userDefaults.integer(forKey: userDefaultsTempUnitsKey)) ?? TempUnits.celsius
+        let windUnits = WindUnits(rawValue: userDefaults.integer(forKey: userDefaultsWindUnitsKey)) ?? WindUnits.metrPerSec
+        let pressureUnits = PressureUnits(rawValue: userDefaults.integer(forKey: userDefaultsPressureUnitsKey)) ?? PressureUnits.hPa
+        units = Units(tempUnits: tempUnits, windUnits: windUnits, pressureUnits: pressureUnits)
+    }
+    
+    func setTempUnits(tempUnits: TempUnits) {
+        units.tempUnits = tempUnits
         userDefaults.set(tempUnits.rawValue, forKey: userDefaultsTempUnitsKey)
     }
-}
-
-var windUnits: WindUnits = WindUnits(rawValue: {
-    return userDefaults.integer(forKey: userDefaultsWindUnitsKey)
-}()) ?? WindUnits.metrPerSec {
-    didSet {
+    
+    func setWindUnits(windUnits: WindUnits) {
+        units.windUnits = windUnits
         userDefaults.set(windUnits.rawValue, forKey: userDefaultsWindUnitsKey)
     }
-}
-
-var pressureUnits: PressureUnits = PressureUnits(rawValue: {
-    return userDefaults.integer(forKey: userDefaultsPressureUnitsKey)
-}()) ?? PressureUnits.mmHg {
-    didSet {
+    
+    func setPressureUnits(pressureUnits: PressureUnits) {
+        units.pressureUnits = pressureUnits
         userDefaults.set(pressureUnits.rawValue, forKey: userDefaultsPressureUnitsKey)
     }
+        
 }
-
-
