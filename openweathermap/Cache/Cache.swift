@@ -38,7 +38,6 @@ final class Cache {
 
         do {
             let items = try FileManager.default.contentsOfDirectory(atPath: cachePath.path)
-
             for item in items {
                 print("Found \(item)")
                 if isCacheTimeOut(cacheFileName: item) {
@@ -76,6 +75,21 @@ final class Cache {
             throw FileManagerError.fileDoesntExist
         }
         return try Data(contentsOf: url)
+    }
+    
+    func clearCache() {
+        do {
+            let items = try FileManager.default.contentsOfDirectory(atPath: cachePath.path)
+            for item in items {
+                print("Delete \(item)...")
+                var url = self.cachePath
+                url.appendPathComponent(item)
+                try FileManager.default.removeItem(atPath: url.path)
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        print(">>> clearCache <<<")
     }
 
 }

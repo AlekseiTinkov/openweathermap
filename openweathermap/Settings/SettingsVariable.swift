@@ -10,6 +10,7 @@ class SettingsVarible {
     private let userDefaultsTempUnitsKey = "tempUnits"
     private let userDefaultsWindUnitsKey = "windUnits"
     private let userDefaultsPressureUnitsKey = "pressureUnits"
+    private let userDefaultsApiKey = "apiKey"
     
     @Observable
     private(set) var units: Units = Units(tempUnits: .celsius, windUnits: .metrPerSec, pressureUnits: .hPa)
@@ -34,6 +35,14 @@ class SettingsVarible {
     func setPressureUnits(pressureUnits: PressureUnits) {
         units.pressureUnits = pressureUnits
         userDefaults.set(pressureUnits.rawValue, forKey: userDefaultsPressureUnitsKey)
+    }
+    
+    func setApiKey(apiKey: String?) {
+        userDefaults.set(apiKey, forKey: userDefaultsApiKey)
+    }
+    
+    func getApiKey() -> String? {
+        userDefaults.string(forKey: userDefaultsApiKey)
     }
         
 }

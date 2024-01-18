@@ -45,7 +45,7 @@ final class SettingsViewController: UIViewController {
     private lazy var tempSegmentedControl: UISegmentedControl = {
         let items = TempUnits.allCases.map {$0.name}
         let segmentedControl = UISegmentedControl(items: items)
-
+        
         segmentedControl.layer.cornerRadius = 5.0
         segmentedControl.backgroundColor = UIColor.colorGray
         segmentedControl.tintColor = UIColor.colorWhite
@@ -62,7 +62,7 @@ final class SettingsViewController: UIViewController {
     private lazy var windSegmentedControl: UISegmentedControl = {
         let items = WindUnits.allCases.map {$0.name}
         let segmentedControl = UISegmentedControl(items: items)
-
+        
         segmentedControl.layer.cornerRadius = 5.0
         segmentedControl.backgroundColor = UIColor.colorGray
         segmentedControl.tintColor = UIColor.colorWhite
@@ -79,7 +79,7 @@ final class SettingsViewController: UIViewController {
     private lazy var pressureSegmentedControl: UISegmentedControl = {
         let items = PressureUnits.allCases.map {$0.name}
         let segmentedControl = UISegmentedControl(items: items)
-
+        
         segmentedControl.layer.cornerRadius = 5.0
         segmentedControl.backgroundColor = UIColor.colorGray
         segmentedControl.tintColor = UIColor.colorWhite
@@ -108,16 +108,82 @@ final class SettingsViewController: UIViewController {
         SettingsVarible.shared.setPressureUnits(pressureUnits: PressureUnits(rawValue: segmentedControl.selectedSegmentIndex) ?? .hPa)
     }
     
+    private lazy var apiKeyTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.textColor = .colorBlack
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.text = "API key".localized
+        return label
+    }()
+    
+    private lazy var apiKeyTextView: UITextView = {
+        let textView = UITextView()
+        textView.backgroundColor = .colorWhite
+        textView.sizeToFit()
+        textView.isScrollEnabled = false
+        
+        let urlString = "https://home.openweathermap.org/api_keys"
+        let attributedString = NSMutableAttributedString(string: "API text".localized + "API link".localized + ".")
+        guard let url = URL(string: urlString) else { return textView }
+        
+        let fullRange = NSRange(location: 0, length: attributedString.length)
+        let urlRange = NSRange(location: "API text".localized.count, length: "API link".localized.count)
+        attributedString.addAttributes([.link: url], range: urlRange)
+        attributedString.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 16), range: fullRange)
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.colorBlack, range: fullRange)
+        attributedString.addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor.colorWhite, range: fullRange)
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .justified
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraph, range: fullRange)
+        
+        textView.attributedText = attributedString
+        textView.isUserInteractionEnabled = true
+        textView.isEditable = false
+        
+        textView.linkTextAttributes = [
+            .foregroundColor: UIColor.colorBlack,
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
+        
+        return textView
+    }()
+    
+    private lazy var apiKeyTextField: UITextField = {
+        let inputView = UITextField()
+        inputView.placeholder = "Enter your API key".localized
+        inputView.backgroundColor = .colorGray
+        inputView.layer.cornerRadius = 5
+        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 0))
+        inputView.leftView = leftView
+        inputView.leftViewMode = .always
+        inputView.clipsToBounds = true
+        inputView.clearButtonMode = .whileEditing
+        inputView.text = SettingsVarible.shared.getApiKey()
+        return inputView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
+        
+        self.hideKeyboardWhenTappedAround()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if SettingsVarible.shared.getApiKey() != apiKeyTextField.text {
+            Cache.shared.clearCache()
+        }
+        SettingsVarible.shared.setApiKey(apiKey: apiKeyTextField.text)
+        super.viewWillDisappear(animated)
     }
     
     private func setupViews() {
         view.backgroundColor = .colorWhite
         
-        [titleLabel, tempLabel, tempSegmentedControl, windLabel, windSegmentedControl, pressureLabel, pressureSegmentedControl].forEach {
+        [titleLabel, tempLabel, tempSegmentedControl, windLabel, windSegmentedControl, pressureLabel, pressureSegmentedControl, apiKeyTitleLabel, apiKeyTextView, apiKeyTextField].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -137,13 +203,18 @@ final class SettingsViewController: UIViewController {
             pressureLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             pressureSegmentedControl.centerYAnchor.constraint(equalTo: pressureLabel.centerYAnchor),
             pressureSegmentedControl.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            
             tempSegmentedControl.widthAnchor.constraint(equalTo: pressureSegmentedControl.widthAnchor),
-            windSegmentedControl.widthAnchor.constraint(equalTo: pressureSegmentedControl.widthAnchor)
+            windSegmentedControl.widthAnchor.constraint(equalTo: pressureSegmentedControl.widthAnchor),
+            apiKeyTitleLabel.topAnchor.constraint(equalTo: pressureSegmentedControl.bottomAnchor, constant: 16),
+            apiKeyTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            apiKeyTextView.topAnchor.constraint(equalTo: apiKeyTitleLabel.bottomAnchor),
+            apiKeyTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            apiKeyTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            apiKeyTextField.topAnchor.constraint(equalTo: apiKeyTextView.bottomAnchor, constant: 16),
+            apiKeyTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            apiKeyTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            apiKeyTextField.heightAnchor.constraint(equalToConstant: 35)
         ])
-        
-        
     }
     
 }
-

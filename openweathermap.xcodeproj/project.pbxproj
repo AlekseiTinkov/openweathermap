@@ -12,7 +12,6 @@
 		714466D72B0D52FF004DFB35 /* OpenWeatherMapModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714466D62B0D52FF004DFB35 /* OpenWeatherMapModels.swift */; };
 		714466DA2B0E861B004DFB35 /* LocationPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714466D92B0E861B004DFB35 /* LocationPageViewModel.swift */; };
 		714466DC2B0E8AF7004DFB35 /* WeaterInfoModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714466DB2B0E8AF7004DFB35 /* WeaterInfoModels.swift */; };
-		714466DF2B0EA274004DFB35 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 714466DE2B0EA274004DFB35 /* Kingfisher */; };
 		714466E32B17C52A004DFB35 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714466E22B17C52A004DFB35 /* Cache.swift */; };
 		7192E7B32B1FBE05004FFA6C /* HourlyForecastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7192E7B22B1FBE05004FFA6C /* HourlyForecastCollectionViewCell.swift */; };
 		7192E7B52B225697004FFA6C /* DailyForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7192E7B42B225697004FFA6C /* DailyForecastTableViewCell.swift */; };
@@ -83,7 +82,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				714466DF2B0EA274004DFB35 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,7 +240,6 @@
 			);
 			name = openweathermap;
 			packageProductDependencies = (
-				714466DE2B0EA274004DFB35 /* Kingfisher */,
 			);
 			productName = openweathermap;
 			productReference = 71B97D8A2AFD714F00D345FE /* openweathermap.app */;
@@ -273,7 +270,6 @@
 			);
 			mainGroup = 71B97D812AFD714F00D345FE;
 			packageReferences = (
-				714466DD2B0EA274004DFB35 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 71B97D8B2AFD714F00D345FE /* Products */;
 			projectDirPath = "";
@@ -553,25 +549,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		714466DD2B0EA274004DFB35 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onevcat/Kingfisher";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.10.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		714466DE2B0EA274004DFB35 /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 714466DD2B0EA274004DFB35 /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 71B97D822AFD714F00D345FE /* Project object */;
 }
