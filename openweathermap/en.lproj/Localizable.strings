@@ -13,6 +13,10 @@
 "km/h" = "km/h";
 "mmHg." = "mmHg.";
 "hPa" = "hPa";
+"API key" = "API key";
+"API text" = "If there are not enough OpenWeatheMap API calls provided to this application, you can use your own API key. To get a free API key, follow the ";
+"API link" = "link";
+"Enter your API key" = "Enter your API key";
 
 "List editing" = "List editing";
 
