@@ -38,7 +38,8 @@ final class EditLocationsViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         print(">>> out")
-        mainPageViewController.updatePageControl(pageInc: 0)
+        mainPageViewController.resetPageControl()
+        mainPageViewController.updatePageControl()
     }
     
     private func setupViews() {

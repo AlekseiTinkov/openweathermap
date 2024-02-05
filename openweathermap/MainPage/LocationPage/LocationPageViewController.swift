@@ -11,7 +11,11 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
     private var locationPageViewModel: LocationPageViewModel
     private let mainPageViewController: MainPageViewControllerProtocol
     
-    var locationId: UUID?
+    var locationId: UUID? {
+        didSet {
+            updatePage()
+        }
+    }
     
     private lazy var labelLocationName: UILabel = {
         let label = UILabel()
@@ -137,7 +141,7 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
         
         locationPageViewModel.$dailyForecastInfo.bind { [weak self] _ in
             guard let self = self else { return }
-            print(">>>\(locationPageViewModel.dailyForecastInfo)")
+            //print(">>>\(locationPageViewModel.dailyForecastInfo)")
             self.dailyForecastTableView.reloadData()
         }
     }
@@ -174,7 +178,7 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
             hourlyForecastCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             hourlyForecastCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             dailyForecastTableView.topAnchor.constraint(equalTo: hourlyForecastCollectionView.bottomAnchor, constant: 10),
-            dailyForecastTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            dailyForecastTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
             dailyForecastTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             dailyForecastTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             placeholderLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -192,7 +196,7 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
         guard let location = locations.first(where: {$0.locationId == locationId}) else {
             return
         }
-    
+        print(location.name)
         self.labelLocationName.text = location.name
         
         locationPageViewModel.loadCurrentWeather(lat: location.lat, lon: location.lon)
