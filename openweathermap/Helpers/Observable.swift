@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  Tracker
-//
-//  Created by Алексей Тиньков on 06.09.2023.
-//
-
 import Foundation
 
 @propertyWrapper

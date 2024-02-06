@@ -1,5 +1,5 @@
 import UIKit
-//import Kingfisher
+import ProgressHUD
 
 protocol LocationPageViewControllerProtocol {
     var locationId: UUID? { get }
@@ -128,7 +128,6 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
             else { return }
             self.currentTempLabel.text = currenWeaterInfo.temp
             self.currentWeaterImage.image = UIImage(named: currenWeaterInfo.icon)
-            //self.currentWeaterImage.kf.setImage(with: URL(string: currenWeaterInfo.icon))
             self.currentWeatherLabel.text = currenWeaterInfo.description
             self.feelsLikeLabel.text = currenWeaterInfo.feelsLike
         }
@@ -141,14 +140,24 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
         
         locationPageViewModel.$dailyForecastInfo.bind { [weak self] _ in
             guard let self = self else { return }
-            //print(">>>\(locationPageViewModel.dailyForecastInfo)")
             self.dailyForecastTableView.reloadData()
+        }
+        
+        locationPageViewModel.$isLoading.bind { [weak self] _ in
+            guard let self = self else { return }
+            if locationPageViewModel.isLoading {
+                ProgressHUD.colorHUD = .clear
+                ProgressHUD.colorAnimation = .colorBlack
+                ProgressHUD.animationType = .circleStrokeSpin
+                ProgressHUD.animate()
+            } else {
+                ProgressHUD.dismiss()
+            }
         }
     }
     
     @objc
     private func didTapPlaceholderLabel() {
-        print(">>>>")
         let addLocationViewModel = AddLocationViewModel()
         let addLocationViewController = AddLocationViewController(addLocationViewModel: addLocationViewModel, mainPageViewController: self.mainPageViewController)
         navigationController?.pushViewController(addLocationViewController, animated: true)
@@ -196,12 +205,9 @@ final class LocationPageViewController: UIViewController, LocationPageViewContro
         guard let location = locations.first(where: {$0.locationId == locationId}) else {
             return
         }
-        print(location.name)
         self.labelLocationName.text = location.name
         
-        locationPageViewModel.loadCurrentWeather(lat: location.lat, lon: location.lon)
-        locationPageViewModel.loadHourlyForecast(lat: location.lat, lon: location.lon)
-        locationPageViewModel.loadDailyForecast(lat: location.lat, lon: location.lon)
+        locationPageViewModel.loadWeather(lat: location.lat, lon: location.lon)
     }
 }
 

@@ -21,6 +21,7 @@
 		71971C652B41553100169176 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71971C642B41553100169176 /* SettingsViewController.swift */; };
 		71971C672B43FE0B00169176 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71971C662B43FE0B00169176 /* Units.swift */; };
 		71971C692B44109C00169176 /* SettingsVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71971C682B44109C00169176 /* SettingsVariable.swift */; };
+		71AC019E2B72B57500898208 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 71AC019D2B72B57500898208 /* ProgressHUD */; };
 		71B97D8E2AFD714F00D345FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97D8D2AFD714F00D345FE /* AppDelegate.swift */; };
 		71B97D972AFD715000D345FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71B97D962AFD715000D345FE /* Assets.xcassets */; };
 		71B97DA22AFD72DF00D345FE /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B97DA12AFD72DF00D345FE /* AddLocationViewController.swift */; };
@@ -82,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71AC019E2B72B57500898208 /* ProgressHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,6 +242,7 @@
 			);
 			name = openweathermap;
 			packageProductDependencies = (
+				71AC019D2B72B57500898208 /* ProgressHUD */,
 			);
 			productName = openweathermap;
 			productReference = 71B97D8A2AFD714F00D345FE /* openweathermap.app */;
@@ -270,6 +273,7 @@
 			);
 			mainGroup = 71B97D812AFD714F00D345FE;
 			packageReferences = (
+				71AC019C2B72B57500898208 /* XCRemoteSwiftPackageReference "ProgressHUD" */,
 			);
 			productRefGroup = 71B97D8B2AFD714F00D345FE /* Products */;
 			projectDirPath = "";
@@ -549,6 +553,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		71AC019C2B72B57500898208 /* XCRemoteSwiftPackageReference "ProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/relatedcode/ProgressHUD";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 14.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		71AC019D2B72B57500898208 /* ProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 71AC019C2B72B57500898208 /* XCRemoteSwiftPackageReference "ProgressHUD" */;
+			productName = ProgressHUD;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 71B97D822AFD714F00D345FE /* Project object */;
 }

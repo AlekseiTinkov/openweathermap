@@ -79,12 +79,10 @@ struct DefaultNetworkClient: NetworkClient {
             } catch {
                 onResponse(.failure(error))
             }
-            print(">>> reading data from cache")
             self.parse(data: data, type: type, onResponse: onResponse)
             return nil
         }
         
-        print(">>> reading data from server")
         return send(urlRequest: urlRequest) { result in
             switch result {
             case let .success(data):

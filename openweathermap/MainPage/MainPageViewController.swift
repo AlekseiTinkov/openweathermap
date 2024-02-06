@@ -248,10 +248,8 @@ extension MainPageViewController: UIPageViewControllerDataSource {
         guard let viewController = viewController as? LocationPageViewControllerProtocol else { return nil }
         if locations.count < 2 { return nil }
         guard var pageIndex = locationPageViews.firstIndex(where: {$0.locationId == viewController.locationId}) else { return nil }
-        print("<<< \(pageIndex)")
         pageIndex += locationPageViewsCount - 1
         pageIndex %= locationPageViewsCount
-        print("<<< \(pageIndex)")
         locationPageViews[pageIndex].locationId = getPreviousPageId(pageId: viewController.locationId)
         return locationPageViews[pageIndex]
     }
@@ -260,10 +258,8 @@ extension MainPageViewController: UIPageViewControllerDataSource {
         guard let viewController = viewController as? LocationPageViewControllerProtocol else { return nil }
         if locations.count < 2 { return nil }
         guard var pageIndex = locationPageViews.firstIndex(where: {$0.locationId == viewController.locationId}) else { return nil }
-        print(">>> \(pageIndex)")
         pageIndex += 1
         pageIndex %= locationPageViewsCount
-        print(">>> \(pageIndex)")
         locationPageViews[pageIndex].locationId = getNextPageId(pageId: viewController.locationId)
         return locationPageViews[pageIndex]
     }

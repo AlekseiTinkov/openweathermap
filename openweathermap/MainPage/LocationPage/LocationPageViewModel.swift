@@ -28,6 +28,9 @@ final class LocationPageViewModel {
     @Observable
     private(set) var dailyForecastInfo: [DailyForecastInfoModel] = []
     
+    @Observable
+    private(set) var isLoading = false
+    
     private func convertTemp(temp: Double) -> String {
         var outTemp: Double
         switch SettingsVarible.shared.units.tempUnits {
@@ -49,12 +52,6 @@ final class LocationPageViewModel {
         return "\(min) ... \(max)"
     }
     
-//    private func getIconUrl(name: String, size: Int) -> String {
-//        var sizeSuffix = ""
-//        if size == 2 { sizeSuffix = "@2x" }
-//        return "https://openweathermap.org/img/wn/\(name)\(sizeSuffix).png"
-//    }
-    
     private func getIconName(_ icon: String) -> String {
         let name = iconsNameReplace[icon]
         return name ?? icon
@@ -64,7 +61,7 @@ final class LocationPageViewModel {
         return CurrentWeaterInfoModel(
                                temp: convertTemp(temp: currentWeatherModel.main.temp),
                                feelsLike: "feels like".localized + " " + convertTemp(temp: currentWeatherModel.main.feelsLike),
-                               icon: getIconName(currentWeatherModel.weather[0].icon), //getIconUrl(name: currentWeatherModel.weather[0].icon, size: 2),
+                               icon: getIconName(currentWeatherModel.weather[0].icon),
                                description: currentWeatherModel.weather[0].description
         )
     }
@@ -82,7 +79,7 @@ final class LocationPageViewModel {
                     time: timeFormatter.string(from: dt),
                     date: dateFormatter.string(from: dt),
                     temp: convertTemp(temp: $0.main.temp),
-                    icon: getIconName($0.weather[0].icon) //getIconUrl(name: $0.weather[0].icon, size: 1)
+                    icon: getIconName($0.weather[0].icon)
                 )
             } else {
                 return nil
@@ -100,7 +97,7 @@ final class LocationPageViewModel {
                 return DailyForecastInfoModel(
                     date: dateFormatter.string(from: dt),
                     temp: convertTempInterval(tempMin: $0.temp.min, tempMax: $0.temp.max),
-                    icon: getIconName($0.weather[0].icon), //getIconUrl(name: $0.weather[0].icon, size: 1),
+                    icon: getIconName($0.weather[0].icon),
                     description: $0.weather[0].description)
             } else {
                 return nil
@@ -115,7 +112,21 @@ final class LocationPageViewModel {
         return nil
     }
     
-    func loadCurrentWeather(lat: Double, lon: Double) {
+    private let loadGroup = DispatchGroup()
+    
+    func loadWeather(lat: Double, lon: Double) {
+        self.isLoading = true
+        
+        loadCurrentWeather(lat: lat, lon: lon)
+        loadHourlyForecast(lat: lat, lon: lon)
+        loadDailyForecast(lat: lat, lon: lon)
+        
+        loadGroup.notify(queue: .main) {
+            self.isLoading = false
+        }
+    }
+    
+    private func loadCurrentWeather(lat: Double, lon: Double) {
         guard let urlRequest = GetCurrentWeatherRequest(lat: lat, lon: lon) else { return }
         let cacheFileName = getCacheFileName(lat: lat, lon: lon, suffix: .currentWeather)
         
@@ -128,7 +139,6 @@ final class LocationPageViewModel {
                     switch result {
                     case .success(let model):
                         self.currentWeatherInfo = self.convertCurrentWeatherToInfo(model)
-                        //print(">>> \(model)")
                     case .failure(let error):
                         print(">>> \(error)")
                     }
@@ -137,7 +147,7 @@ final class LocationPageViewModel {
         }
     }
     
-    func loadHourlyForecast(lat: Double, lon: Double) {
+    private func loadHourlyForecast(lat: Double, lon: Double) {
         guard let urlRequest = GetHourlyForecastRequest(lat: lat, lon: lon) else { return }
         let cacheFileName = getCacheFileName(lat: lat, lon: lon, suffix: .hourlyForecast)
         
@@ -150,7 +160,6 @@ final class LocationPageViewModel {
                     switch result {
                     case .success(let model):
                         self.hourlyForecastInfo = self.convertHourlyForecastToInfo(model)
-                        //print(">>> \(model)")
                     case .failure(let error):
                         print(">>> \(error)")
                     }
@@ -159,7 +168,7 @@ final class LocationPageViewModel {
         }
     }
     
-    func loadDailyForecast(lat: Double, lon: Double) {
+    private func loadDailyForecast(lat: Double, lon: Double) {
         guard let urlRequest = GetDailyForecastRequest(lat: lat, lon: lon) else { return }
         let cacheFileName = getCacheFileName(lat: lat, lon: lon, suffix: .dailyForecast)
         
@@ -172,7 +181,6 @@ final class LocationPageViewModel {
                     switch result {
                     case .success(let model):
                         self.dailyForecastInfo = self.convertDailyForecastToInfo(model)
-                        //print(">>> \(model)")
                     case .failure(let error):
                         print(">>> \(error)")
                     }

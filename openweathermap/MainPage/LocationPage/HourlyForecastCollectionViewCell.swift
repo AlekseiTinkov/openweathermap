@@ -63,7 +63,7 @@ final class HourlyForecastCollectionViewCell: UICollectionViewCell {
     func configure(_ info: HourlyForecastInfoModel) {
         self.timeLabel.text = info.time
         self.dateLabel.text = info.date
-        self.weaterImage.image = UIImage(named: info.icon) //.kf.setImage(with: URL(string: info.icon))
+        self.weaterImage.image = UIImage(named: info.icon)
         self.tempLabel.text = info.temp
     }
     

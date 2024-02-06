@@ -57,7 +57,7 @@ final class DailyForecastTableViewCell: UITableViewCell {
     
     func configure(_ info: DailyForecastInfoModel) {
         self.dateLabel.text = info.date
-        self.weaterImage.image = UIImage(named: info.icon)//.kf.setImage(with: URL(string: info.icon))
+        self.weaterImage.image = UIImage(named: info.icon)
         self.tempLabel.text = info.temp
     }
     
