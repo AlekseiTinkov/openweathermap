@@ -20,6 +20,8 @@
 <img src="https://github.com/AlekseiTinkov/openweathermap/assets/124910352/46550d0c-f28e-4bab-93ab-133be4dfa6a6" width="200" title="Swift"></img>
 <img src="https://github.com/AlekseiTinkov/openweathermap/assets/124910352/eda6df90-de57-45c6-b552-3925ef40a3d2" width="200" title="Swift"></img>
 
+В приложении использована колекция иконок от Pascal Vleugels https://dribbble.com/pasxal
+
 ## Основной экран
 Основной экран выполнен на основе UIPageViewController. На каждой странице контроллера размещается информация о погоде в отдельной географической локации. Заголовок страницы контролера содержит название локации и кнопку меню, дующую доступ к следующим функциям:
 - добавление локации;
